@@ -20,7 +20,7 @@ self.__precacheManifest = [
     "url": "/eco_planet/static/css/main.ab63960e.chunk.css"
   },
   {
-    "revision": "25cb821448f0339782b5f786214c2d49",
+    "revision": "00230dfd7e0117d517f0306eed5ee8c2",
     "url": "/eco_planet/index.html"
   }
 ];
