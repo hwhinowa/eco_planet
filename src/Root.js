@@ -7,11 +7,11 @@ import App from 'components/App';
 
 const Root = () => {
     return (
-        <BrowserRouter>
+        // <BrowserRouter>
             <Provider store = {store}>
                 <App />
             </Provider>
-        </BrowserRouter>
+        // </BrowserRouter>
     );
 };
 
