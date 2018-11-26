@@ -1,28 +1,17 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Route } from 'react-router-dom';
+import { Home, PlanetDetail } from 'pages';
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            app in components
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+    render(){
+        return(
+            <div>
+              {/* <Home/> */}
+                <Route exact path='/' component={Home}/>
+                {/* <Route path='/detail' component={PlanetDetail}/> */}
+            </div>
+        )
+    }
 }
 
 export default App;
