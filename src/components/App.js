@@ -6,7 +6,7 @@ class App extends Component {
     render(){
         return(
             <div>
-              <Home/>
+                <Home/>
                 {/* <Route exact path='/' component={Home}/> */}
                 {/* <Route path='/detail' component={PlanetDetail}/> */}
             </div>

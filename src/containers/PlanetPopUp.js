@@ -33,6 +33,7 @@ class PlanetPopUp extends Component {
     closePopup=(num)=>{
         let popup = document.querySelector('.planet_popup'+num);
         popup.style.display = 'none';
+        this.props.planet_num(0);
     }
 
     render() {
