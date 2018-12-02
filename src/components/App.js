@@ -6,13 +6,13 @@ import { Home, PlanetDetail } from 'pages';
 class App extends Component {
     render(){
         return(
-            <Router>
+            // <Router>
                 <div>
-                    {/* <Home/> */}
+                    {/* <Home/>
                     <Route exact path='/' component={Home}/>
-                    <Route path='/detail' component={PlanetDetail}/>
+                    <Route path='/detail' component={PlanetDetail}/> */}
                 </div>
-            </Router>
+            // </Router>
         )
     }
 }

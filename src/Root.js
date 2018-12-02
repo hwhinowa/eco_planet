@@ -1,17 +1,20 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-// import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Home, PlanetDetail } from 'pages';
 import store from './store';
 
 import App from 'components/App';
 
 const Root = () => {
     return (
-        // <BrowserRouter>
+        <Router>
             <Provider store = {store}>
-                <App />
+                {/* <App /> */}
+                <Route exact path='/' component={Home}/>
+                <Route path='/detail' component={PlanetDetail}/>
             </Provider>
-        // </BrowserRouter>
+        </Router>
     );
 };
 
