@@ -8,16 +8,16 @@ import App from 'components/App';
 
 const Root = () => {
     return (
-        <Router>
-            <Provider store = {store}>
+        <Provider store = {store}>
+            <Router>
                 {/* <App /> */}
                 {/* <Route exact path='/' component={Home}/> */}
                 <div>
                     <Route exact path='/' component={Home}/>
                     <Route path='/detail' component={PlanetDetail}/>
                 </div>
-            </Provider>
-        </Router>
+            </Router>
+        </Provider>
     );
 };
 
