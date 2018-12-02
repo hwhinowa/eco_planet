@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/eco_planet/precache-manifest.c4c9cd66c8372612aa5ba52bb7903c23.js"
+  "/eco_planet/precache-manifest.e0bd0ed40b2b02ad62542295fdf78020.js"
 );
 
 workbox.clientsClaim();
