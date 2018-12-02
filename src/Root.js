@@ -1,8 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Home } from 'pages/Home';
-import { PlanetDetail } from 'pages/PlanetDetaile';
+import { Home, PlanetDetail } from 'pages';
 import store from './store';
 
 import App from 'components/App';
