@@ -13,7 +13,7 @@ const Root = () => {
                 {/* <App /> */}
                 {/* <Route exact path='/' component={Home}/> */}
                 <div>
-                    <Route path='/' component={Home}/>
+                    <Route exact path='/' component={Home}/>
                     <Route path='/detail' component={PlanetDetail}/>
                 </div>
             </Provider>
