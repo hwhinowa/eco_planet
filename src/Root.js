@@ -9,14 +9,15 @@ import App from 'components/App';
 const Root = () => {
     return (
         <Provider store = {store}>
-            <Router>
+            {/* <Router> */}
                 {/* <App /> */}
                 {/* <Route exact path='/' component={Home}/> */}
                 <div>
-                    <Route exact path='/' component={Home}/>
-                    <Route path='/detail' component={PlanetDetail}/>
+                    <Home/>
+                    {/* <Route exact path='/' component={Home}/>
+                    <Route path='/detail' component={PlanetDetail}/> */}
                 </div>
-            </Router>
+            {/* </Router> */}
         </Provider>
     );
 };
