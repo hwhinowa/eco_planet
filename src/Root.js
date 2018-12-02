@@ -11,8 +11,9 @@ const Root = () => {
         <Router>
             <Provider store = {store}>
                 {/* <App /> */}
+                {/* <Route exact path='/' component={Home}/> */}
                 <Route path='/' component={Home}/>
-                {/* <Route path='/detail' component={PlanetDetail}/> */}
+                <Route path='/detail' component={PlanetDetail}/>
             </Provider>
         </Router>
     );
