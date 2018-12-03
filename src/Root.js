@@ -7,12 +7,12 @@ import store from './store';
 
 import App from 'components/App';
 
-const Root = () => {
+const Root = () => (
     <Provider store = {store}>
         <Router>
             <App/>
         </Router>
     </Provider>
-};
+);
 
 export default Root;
