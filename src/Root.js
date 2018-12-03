@@ -1,5 +1,5 @@
 import React from 'react';
-// import { Provider } from 'react-redux';
+import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Home, PlanetDetail } from 'pages';
 import store from './store';
