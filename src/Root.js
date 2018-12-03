@@ -14,8 +14,10 @@ const Root = () => {
                 {/* <Route exact path='/' component={Home}/> */}
                 <div>
                     {/* <Home/> */}
+                    
+                    <Route path='/detail' component={PlanetDetail}/>
+
                     <Route exact path='/' component={Home}/>
-                    <Route path='/:detail' component={PlanetDetail}/>
                 </div>
             </Provider>
         </Router>
