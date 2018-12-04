@@ -6,7 +6,6 @@ import Root from 'Root';
 import { BrowserRouter as Router } from 'react-router-dom';
 // import * as serviceWorker from './serviceWorker';
 import registerServiceWorker from './registerServiceWorker';
-import register from './registerServiceWorker';
 
 ReactDOM.render(
     <Router>
