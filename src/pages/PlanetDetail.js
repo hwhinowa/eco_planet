@@ -14,8 +14,4 @@ class PlanetDetail extends Component{
     }
 }
 
-// pages 현재위치에 index.js 내용
-// export { default as Home } from './Home';
-// export { default as PlanetDetail } from './PlanetDetail';
-
 export default PlanetDetail;

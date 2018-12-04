@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
-import { Switch, Route, withRouter } from 'react-router-dom';
-import Home from 'pages/Home';
-import PlanetDetail from 'pages/PlanetDetail';
+import { Route } from 'react-router-dom';
+// import { Switch, Route, withRouter } from 'react-router-dom';
+import { Home, PlanetDetail } from 'pages';
 
 class App extends Component {
     render(){
         return(
-            <Switch>
+            <div>
                 <Route exact path='/' component={Home}/>
                 <Route path='/detail' component={PlanetDetail}/>
-            </Switch>
+            </div>
         );
     }
 }
 
-export default withRouter(App);
+export default App;
