@@ -6,9 +6,9 @@ import App from 'components/App';
 import { Provider } from 'react-redux';
 import store from './store';
 // import App from 'components/App';
-import { BrowserRouter as Router } from 'react-router-dom';
-// import * as serviceWorker from './serviceWorker';
-import registerServiceWorker from './registerServiceWorker';
+import { HashRouter as Router } from 'react-router-dom';
+import * as serviceWorker from './serviceWorker';
+// import registerServiceWorker from './registerServiceWorker';
 
 ReactDOM.render(
     <Provider store = {store}>
@@ -22,5 +22,5 @@ ReactDOM.render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: http://bit.ly/CRA-PWA
 
-// serviceWorker.unregister();
-registerServiceWorker();
+serviceWorker.unregister();
+// registerServiceWorker();
