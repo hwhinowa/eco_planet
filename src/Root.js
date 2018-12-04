@@ -8,11 +8,11 @@ import { HashRouter as Router } from 'react-router-dom';
 import App from 'components/App';
 
 const Root = () => (
-    <Provider store = {store}>
-        <Router>
+    <Router>
+        <Provider store = {store}>
             <App/>
-        </Router>
-    </Provider>
+        </Provider>
+    </Router>
 );
 
 export default Root;
