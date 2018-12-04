@@ -12,7 +12,7 @@ class App extends Component {
                     <Route path='/detail' component={PlanetDetail}/>
                 </div>
             </Router>
-        )
+        );
     }
 }
 

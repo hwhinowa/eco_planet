@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { HashRouter as Router } from 'react-router-dom';
+// import { HashRouter as Router } from 'react-router-dom';
 // import { browserHistory } from 'react-router';
 import { Home, PlanetDetail } from 'pages';
 import store from './store';
