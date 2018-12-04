@@ -9,9 +9,9 @@ import App from 'components/App';
 
 const Root = () => (
     <Provider store = {store}>
-        <Router>
+        {/* <Router> */}
             <App/>
-        </Router>
+        {/* </Router> */}
     </Provider>
 );
 
