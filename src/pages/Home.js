@@ -141,10 +141,10 @@ class Home extends Component {
             <div className='App' onMouseOver={(event)=>this.rotate_by_cursor(event)}>
 
                 {/* 행성 표시 */}
-                {this.set_planet_view()};
+                {this.set_planet_view()}
 
                 {/* 각 행성에 대한 팝업 표시 */}
-                {this.set_popup_view()};
+                {this.set_popup_view()}
 
                 <Center
                     width = {this.state.width}
