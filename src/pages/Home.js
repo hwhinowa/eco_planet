@@ -139,7 +139,7 @@ class Home extends Component {
         }
         return (
             <div className='App' onMouseOver={(event)=>this.rotate_by_cursor(event)}>
-                Update!!!!!!!!!QQQQQQQQQ
+                Update!!!!!!!!!SSSSSS
                 {/* 행성 표시 */}
                 {this.set_planet_view()}
 
