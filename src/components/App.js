@@ -5,13 +5,14 @@ import { Home, PlanetDetail } from 'pages';
 
 class App extends Component {
     render(){
+        console.log(process.env.PUBLIC_URL);
         return(
             <div>
                 {/* <Home/> */}
-                <Switch>
+                {/* <Switch> */}
                     <Route exact path={process.env.PUBLIC_URL + '/'} component={Home}/>
                     <Route path={process.env.PUBLIC_URL + '/detail'} component={PlanetDetail}/>
-                </Switch>
+                {/* </Switch> */}
             </div>
         );
     }
