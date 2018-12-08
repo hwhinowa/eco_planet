@@ -8,8 +8,8 @@ class App extends Component {
         return(
             <div>
                 {/* <Home/> */}
-                <Route exact path='/' component={Home}/>
-                <Route path='/detail' component={PlanetDetail}/>
+                <Route exact path={process.env.PUBLIC_URL + '/'} component={Home}/>
+                <Route path={process.env.PUBLIC_URL + '/detail'} component={PlanetDetail}/>
             </div>
         );
     }
