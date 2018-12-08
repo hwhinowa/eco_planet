@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "https://hwhinowa.github.io/eco_planet/precache-manifest.39e18773f84a61c7361ef7cb3f13267f.js"
+  "/eco_planet/precache-manifest.507508174a282c81b1039b14b304c512.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("https://hwhinowa.github.io/eco_planet/index.html", {
+workbox.routing.registerNavigationRoute("/eco_planet/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
