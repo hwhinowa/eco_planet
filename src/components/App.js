@@ -9,7 +9,7 @@ class App extends Component {
             <div>
                 {/* <Home/> */}
                 <Route exact path={process.env.PUBLIC_URL + '/'} component={Home}/>
-                <Route path={process.env.PUBLIC_URL + '/detail'} component={PlanetDetail}/>
+                <Route path={'/detail'} component={PlanetDetail}/>
             </div>
         );
     }
