@@ -4,7 +4,7 @@ import * as planetActions from 'store/modules/planet';
 
 import Planet from 'components/planet/Planet';
 
-class PlanetContainer1 extends Component {
+class PlanetContainer extends Component {
     constructor(props){
         super(props);
 
@@ -18,7 +18,6 @@ class PlanetContainer1 extends Component {
     }
 
     handle_number = (number) => {
-        console.log(number);
         this.props.planet_num(number);
     }
 
@@ -51,4 +50,4 @@ const mapDispatchToProps = (dispatch) => ({
     // }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PlanetContainer1);
+export default connect(mapStateToProps, mapDispatchToProps)(PlanetContainer);

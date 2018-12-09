@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import * as planetActions from 'store/modules/planet';
 
 import 'css/planet.css';
@@ -36,6 +37,10 @@ class PlanetPopUp extends Component {
         this.props.planet_num(0);
     }
 
+    planetDataSet=(data)=>{
+        this.props.planet_data(data);
+    }
+
     render() {
         let info = this.state.info;
         let planet_name = '';
@@ -63,8 +68,7 @@ class PlanetPopUp extends Component {
                 <p>plant : {info.plant / 100}m</p>
                 <p>animal : {info.animal / 100}m</p>
                 <p>people : {info.people / 100}m</p>
-                {/* <Link to=''>
-                </Link> */}
+                <Link to={'/detail/'+info.id} onClick={()=>this.planetDataSet(info)}>Go to the planet!</Link>
             </div>
         );
     }
@@ -78,6 +82,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     planet_num : (number = 0) => {
         dispatch(planetActions.planet_num(number));
+    },
+    planet_data : (data = {})=> {
+        dispatch(planetActions.planet_data(data));
     }
 });
 

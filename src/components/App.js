@@ -8,12 +8,12 @@ class App extends Component {
         console.log(process.env.PUBLIC_URL);
         return(
             <div>
-                {/* <Home/> */}
-                {/* <Switch> */}
-                    {/* <Route path={process.env.PUBLIC_URL + '/'} component={Home}/> */}
-                    <Route exact path={'/'} component={Home}/>
+                {/* <Route path={process.env.PUBLIC_URL + '/'} component={Home}/> */}
+                <Route exact path={'/'} component={Home}/>
+                <Switch>
+                    <Route path={'/detail/:number'} component={PlanetDetail}/>
                     <Route path={'/detail'} component={PlanetDetail}/>
-                {/* </Switch> */}
+                </Switch>
             </div>
         );
     }
