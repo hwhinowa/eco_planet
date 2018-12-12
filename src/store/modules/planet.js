@@ -30,9 +30,15 @@ const initialState = {
 export default function reducer(state = initialState, action){
     switch(action.type){
         case PLANET_NUM :
-            return { number : action.number };
+            return {
+                ...state,
+                number : action.number
+            };
         case PLANET_DATA : 
-            return { data : action.data };
+            return {
+                ...state,
+                data : action.data
+            };
         default :
             return state;
     }

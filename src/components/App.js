@@ -5,7 +5,7 @@ import { Home, PlanetDetail } from 'pages';
 
 class App extends Component {
     render(){
-        console.log(process.env.PUBLIC_URL);
+        // console.log(process.env.PUBLIC_URL);
         return(
             <div>
                 {/* <Route path={process.env.PUBLIC_URL + '/'} component={Home}/> */}

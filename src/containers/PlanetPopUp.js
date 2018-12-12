@@ -39,6 +39,7 @@ class PlanetPopUp extends Component {
 
     planetDataSet=(data)=>{
         this.props.planet_data(data);
+        // this.context.router.history.push("/class");
     }
 
     render() {
@@ -68,12 +69,15 @@ class PlanetPopUp extends Component {
                 <p>plant : {info.plant / 100}m</p>
                 <p>animal : {info.animal / 100}m</p>
                 <p>people : {info.people / 100}m</p>
-                <Link to={'/detail/'+info.id} onClick={()=>this.planetDataSet(info)}>Go to the planet!</Link>
+                <Link to={`/detail/`+info.id} onClick={()=>this.planetDataSet(info)}>Go to the planet!</Link>
             </div>
         );
     }
 }
 
+// PlanetPopUp.contextTypes={
+//     router : React.PropTypes.object
+// };
 
 const mapStateToProps = (state) => ({
     number : state.planet.number

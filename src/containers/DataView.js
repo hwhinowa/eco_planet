@@ -7,14 +7,19 @@ class DataView extends Component{
         super(props);
 
         this.state = {
-
+            data : this.props.data
         }
     }
 
     render(){
+        let data = this.state.data;
+
         return(
             <div className='dataContainer'>
-                DATA VIEW
+                {data.people}<br/>
+                {data.animal}<br/>
+                {data.plant}<br/>
+                {data.trash}
             </div>
         )
     }

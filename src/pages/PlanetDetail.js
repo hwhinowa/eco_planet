@@ -30,6 +30,7 @@ class PlanetDetail extends Component{
             planetName : 'Planet ' + name,
             planetInfo : {...this.props.data}
         }
+        console.log(this.state);
     }
 
     render(){
@@ -38,7 +39,9 @@ class PlanetDetail extends Component{
                 <Link to='/' className='goHome'>
                     <div>Home</div>
                 </Link>
-                <h1>{this.state.planetName} Eco System</h1>
+                <h1>{this.state.planetName} Ecosystem</h1>
+
+                {/* <PlanetGround/> */}
 
                 <DataView
                     data = {this.state.planetInfo}
