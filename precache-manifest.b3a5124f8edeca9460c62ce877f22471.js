@@ -16,19 +16,19 @@ self.__precacheManifest = [
     "url": "/eco_planet/static/js/runtime~main.31f87634.js"
   },
   {
-    "revision": "73acb43897b5f15240ad",
-    "url": "/eco_planet/static/js/main.73acb438.chunk.js"
+    "revision": "c4a50d6c44e6ca6a402b",
+    "url": "/eco_planet/static/js/main.c4a50d6c.chunk.js"
   },
   {
-    "revision": "b17da74e72c8ebb0a1ef",
-    "url": "/eco_planet/static/js/1.b17da74e.chunk.js"
+    "revision": "079b419512ec0a23ecea",
+    "url": "/eco_planet/static/js/1.079b4195.chunk.js"
   },
   {
-    "revision": "73acb43897b5f15240ad",
-    "url": "/eco_planet/static/css/main.4b6d6039.chunk.css"
+    "revision": "c4a50d6c44e6ca6a402b",
+    "url": "/eco_planet/static/css/main.c55d785f.chunk.css"
   },
   {
-    "revision": "1ea094c90d4bd50dfd05e9ea689ef417",
+    "revision": "28d09a48b773b0b397abc2f01fd75c88",
     "url": "/eco_planet/index.html"
   }
 ];
