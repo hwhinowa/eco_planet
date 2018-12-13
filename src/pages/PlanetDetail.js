@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import * as planetActions from 'store/modules/planet';
 
+import PlanetGroundContainer from 'containers/PlanetGroundContainer';
 import DataView from 'containers/DataView';
 import 'css/planetDetail.css';
 
@@ -41,7 +42,9 @@ class PlanetDetail extends Component{
                 </Link>
                 <h1>{this.state.planetName} Ecosystem</h1>
 
-                {/* <PlanetGround/> */}
+                <PlanetGroundContainer
+                    data = {this.state.planetInfo}
+                />
 
                 <DataView
                     data = {this.state.planetInfo}

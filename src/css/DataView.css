@@ -1,10 +1,13 @@
+/*
+* ---------- DataView.css ----------
+*/
 @charset "utf-8";
 
 .dataContainer{
     position:absolute;
     top:0;
     right:0;
-    width:20%;
+    width:20rem;
     height:100%;
     background:#333;
 }

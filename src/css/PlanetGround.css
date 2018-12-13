@@ -1,0 +1,14 @@
+/*
+* ---------- PlanetGround.css ----------
+*/
+@charset "utf-8";
+
+.groundContainer{
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    width: calc(80% - 20rem);
+    height: 60rem;
+    transform: translateY(-50%);
+    /* border: solid 1px #fff; */
+}
