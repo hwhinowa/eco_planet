@@ -68,7 +68,7 @@ class PlanetPopUp extends Component {
                 <p>ocean : {ocean}h</p>
                 <p>plant : {info.plant / 100}m</p>
                 <p>animal : {info.animal / 100}m</p>
-                <p>people : {info.people / 100}m</p>
+                <p>hominidae : {info.hominidae / 100}m</p>
                 <Link to={`/detail/`+info.id} onClick={()=>this.planetDataSet(info)}>Go to the planet!</Link>
             </div>
         );

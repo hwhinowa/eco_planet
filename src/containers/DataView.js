@@ -16,7 +16,7 @@ class DataView extends Component{
 
         return(
             <div className='dataContainer'>
-                {data.people}<br/>
+                {data.hominidae}<br/>
                 {data.animal}<br/>
                 {data.plant}<br/>
                 {data.trash}

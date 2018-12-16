@@ -50,3 +50,9 @@
     background: #030408;
     box-shadow: 0 0 3rem #030408;
 }
+
+.dataPoints{
+    font-size:2rem;
+    color:#fff;
+    margin:0 auto;
+}

@@ -48,7 +48,7 @@ class Home extends Component {
         for(let i = 0; i < 3; i++){
             let obj = {};
             obj.id = i + 1;
-            obj.people = this.randomRange(80, 170) * 10;
+            obj.hominidae = this.randomRange(80, 170) * 10;
             if(i === 2){
                 if(rate[0] > 1 && rate[1] > 1){
                     obj.animal = this.randomRange(50, 90) * 10;
@@ -58,11 +58,11 @@ class Home extends Component {
             }else{
                 obj.animal = this.randomRange(100, 300) * 10;
             }
-            obj.plant = this.randomRange(obj.people - 300, obj.people + 300);
+            obj.plant = this.randomRange(obj.hominidae - 300, obj.hominidae + 300);
             obj.trash = 0;
 
             planet.push(obj);
-            rate.push(obj.animal / obj.people);
+            rate.push(obj.animal / obj.hominidae);
         }
 
         return planet;

@@ -17,7 +17,7 @@ const initialState = {
     number : 0,
     data : {
         id : 0,
-        people : 0,
+        hominidae : 0,
         animal : 0,
         plant : 0,
         trash : 0,
