@@ -51,6 +51,9 @@
     box-shadow: 0 0 3rem #030408;
 }
 
+.groundContainer .dataPoints svg{
+    z-index:99999;
+}
 .dataPoints{
     font-size:2rem;
     color:#fff;
