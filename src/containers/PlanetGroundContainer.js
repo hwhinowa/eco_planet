@@ -8,32 +8,8 @@ class PlanetGroundContainer extends Component{
 
         this.state = {
             data : this.props.data
-        }
-
-        // this.points_push = this.points_push.bind(this);
-        // this.onChangePage = this.onChangePage.bind(this);
+        };
     }
-
-    componentDidMount(){
-        // let el = document.getElementById('test');
-        // console.log(el);
-        // let result = el.getBBox().width;
-        // console.log(result);
-        // let point_box = document.getElementsByClassName('dataPoints')[0];
-        // console.log(point_box);
-        // console.log(window.getComputedStyle(point_box)['width']);
-        // console.log(point_box.style.width);
-        // point_box.style.width = result + 'px';
-        // console.log(point_box.style.width);
-        // console.log(window.getComputedStyle(point_box)['width']);
-
-        // let a = document.querySelector('#data_hominidae_view');
-        // let b = document.querySelector('#data_hominidae');
-        // console.log(a, b);
-        // console.log(b.scrollTop);
-        // console.log(b.offsetTop);
-    }
-
 
     point_set = () => {
         let data = this.state.data;
@@ -57,6 +33,8 @@ class PlanetGroundContainer extends Component{
         let rate_ref = 12 - t;
         p = Math.floor(data.plant / (data.animal + data.plant + data.hominidae) / rate_ref * 100);
         a = Math.floor(data.animal / (data.animal + data.plant + data.hominidae) / rate_ref * 100);
+        h = rate_ref - p - a;
+        console.log(p, a, h, t);
         let middle_arr;
 
         switch(data.id){
@@ -74,7 +52,7 @@ class PlanetGroundContainer extends Component{
                 break;
         }
 
-        let flag = 1;
+        let key_flag = 1;
 
         for(let i = 0; i < middle_arr.length; i++){
             if(middle_arr.length !== 0){
@@ -97,44 +75,52 @@ class PlanetGroundContainer extends Component{
             switch(type_data){
                 case 'p':
                     result.push(
-                        <circle
-                            key={`planet`+data.id+`_`+flag+`_p`}
-                            className='data_plant'
-                            cx={x_data} cy={y_data} r='5' fill='#fff'
-                        />
+                        <svg viewBox='0 0 600 600'>
+                            <circle
+                                key={`planet`+data.id+`_`+key_flag+`_p`}
+                                className='data_plant'
+                                cx={x_data} cy={y_data} r='5' fill='#fff'
+                            />
+                        </svg>
                     );
                     break;
                 case 'a':
                     result.push(
-                        <circle
-                            key={`planet`+data.id+`_`+flag+`_a`}
-                            className='data_animal'
-                            cx={x_data} cy={y_data} r='5' fill='yellow'
-                        />
+                        <svg viewBox='0 0 600 600'>
+                            <circle
+                                key={`planet`+data.id+`_`+key_flag+`_a`}
+                                className='data_animal'
+                                cx={x_data} cy={y_data} r='5' fill='yellow'
+                            />
+                        </svg>
                     );
                     break;
                 case 'h':
                     result.push(
-                        <circle
-                            key={`planet`+data.id+`_`+flag+`_h`}
-                            className='data_hominidae'
-                            cx={x_data} cy={y_data} r='5' fill='green'
-                        />
+                        <svg viewBox='0 0 600 600'>
+                            <circle
+                                key={`planet`+data.id+`_`+key_flag+`_h`}
+                                className='data_hominidae'
+                                cx={x_data} cy={y_data} r='5' fill='green'
+                            />
+                        </svg>
                     );
                     break;
                 case 't':
                     result.push(
-                        <circle
-                            key={`planet`+data.id+`_`+flag+`_t`}
-                            className='data_trash'
-                            cx={x_data} cy={y_data} r='5' fill='gray'
-                        />
+                        <svg viewBox='0 0 600 600'>
+                            <circle
+                                key={`planet`+data.id+`_`+key_flag+`_t`}
+                                className='data_trash'
+                                cx={x_data} cy={y_data} r='5' fill='gray'
+                            />
+                        </svg>
                     );
                     break;
                 default :
                     break;
             }
-            flag += 1;
+            key_flag += 1;
         };
 
         return result;
@@ -152,8 +138,14 @@ class PlanetGroundContainer extends Component{
                 </div> */}
                 <div className='dataPoints'>
                     <svg viewBox='0 0 600 600'>
-                        {this.point_set()}
+                        <path d='M9 11 q 14 -20, 27 0 q 8 4, 0 8 q 0 4, -5 6 q 1 5, -8 8 q -11 -4, -9 -9 q -6 -2, -6 -5 q -8 -4, 0 -8' fill='brown'/>
+                        <path d='M27 29 h -11 q -2 -2, 1 -6 v -2 q -6 -1, -7 -6 q 5 -6, 11 0 h 3 q 5 -6, 10 0 q 0 6, -6 6 v 2 q 2 4, -1 6' fill='white' stroke='white'/>
+                        <circle cx='16' cy='16' r='3' fill='black' />
+                        <circle cx='29' cy='16' r='3' fill='black' />
+                        <circle cx='21' cy='21' r='1' fill='black' />
+                        <circle cx='24' cy='21' r='1' fill='black' />
                     </svg>
+                    {this.point_set()}
                 </div>
                 <svg viewBox='0 0 600 600'>
                     {(data.id === 1) &&
