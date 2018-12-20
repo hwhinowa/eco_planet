@@ -75,45 +75,56 @@ class PlanetGroundContainer extends Component{
             switch(type_data){
                 case 'p':
                     result.push(
-                        <svg viewBox='0 0 600 600'>
-                            <circle
-                                key={`planet`+data.id+`_`+key_flag+`_p`}
-                                className='data_plant'
-                                cx={x_data} cy={y_data} r='5' fill='#fff'
-                            />
+                        <svg
+                            viewBox='0 0 600 600'
+                            key={`planet`+data.id+`_`+key_flag+`_p`}>
+                            <path d={`M`+x_data+` `+y_data+` q -13 3, -10 -4 q 0 -10, 8 -7 q 1 -8, 10 -5 q 8 2, 3 10 q 8 2, 3 10 q -5 8, -11 -2 l -3 -2`} fill='#008000' className='plant_leaf'/>
+                            <line x1={x_data+1} y1={y_data+1} x2={x_data-3} y2={y_data+14} stroke='#66350d' strokeWidth='3' className='plant_trunk'/>
                         </svg>
                     );
                     break;
                 case 'a':
                     result.push(
-                        <svg viewBox='0 0 600 600'>
-                            <circle
-                                key={`planet`+data.id+`_`+key_flag+`_a`}
-                                className='data_animal'
-                                cx={x_data} cy={y_data} r='5' fill='yellow'
-                            />
+                        <svg
+                            viewBox='0 0 600 600'
+                            key={`planet`+data.id+`_`+key_flag+`_a`}>
+                            <path d={`M`+x_data+` `+y_data+` q 7 -7, 15 0 v 14 q -8 8, -15 1 v -15`} fill='#222' stroke='#ddd' className='animal_body'/>
+                            <circle cx={x_data+7} cy={y_data+4} r='5' stroke='#333' fill='#eee' className='animal_eye' />
+                            <circle cx={x_data+7} cy={y_data+4} r='2' fill='black' className='animal_pupil'/>
+                            <line x1={x_data} y1={y_data+11} x2={x_data-3} y2={y_data+12} stroke='#ddd' />
+                            <line x1={x_data+15} y1={y_data+12} x2={x_data+18} y2={y_data+12} stroke='#ddd' />
+                            <line x1={x_data+1} y1={y_data+16} x2={x_data-2} y2={y_data+17} stroke='#ddd' />
+                            <line x1={x_data+14} y1={y_data+15} x2={x_data+17} y2={y_data+17} stroke='#ddd' />
+                            <line x1={x_data+8} y1={y_data+19} x2={x_data+2} y2={y_data+21} stroke='#ddd' />
+                            <line x1={x_data+11} y1={y_data+19} x2={x_data+13} y2={y_data+20} stroke='#ddd' />
+                            <line x1={x_data+7} y1={y_data+19} x2={x_data+7} y2={y_data+23} stroke='#ddd' />
                         </svg>
                     );
                     break;
                 case 'h':
                     result.push(
-                        <svg viewBox='0 0 600 600'>
-                            <circle
-                                key={`planet`+data.id+`_`+key_flag+`_h`}
-                                className='data_hominidae'
-                                cx={x_data} cy={y_data} r='5' fill='green'
-                            />
+                        <svg
+                            viewBox='0 0 600 600'
+                            key={`planet`+data.id+`_`+key_flag+`_h`}>
+                            <path d={`M`+x_data+` `+y_data+` q 14 -20, 27 0 q 8 4, 0 8 q 0 4, -5 6 q 1 5, -8 8 q -11 -4, -9 -9 q -6 -2, -6 -5 q -8 -4, 0 -8`} fill='brown' className='hominidae_hair'/>
+                            <path d={`M`+(x_data+18)+` `+(y_data+18)+`h -11 q -2 -2, 1 -6 v -2 q -6 -1, -7 -6 q 5 -6, 11 0 h 3 q 5 -6, 10 0 q 0 6, -6 6 v 2 q 2 4, -1 6`} fill='white' stroke='white' className='hominidae_face'/>
+                            <circle cx={x_data+7} cy={y_data+5} r='3' fill='black' className='hominidae_eye'/>
+                            <circle cx={x_data+20} cy={y_data+5} r='3' fill='black' className='hominidae_eye'/>
+                            <circle cx={x_data+12} cy={y_data+10} r='1' fill='black' />
+                            <circle cx={x_data+15} cy={y_data+10} r='1' fill='black' />
                         </svg>
                     );
                     break;
                 case 't':
                     result.push(
-                        <svg viewBox='0 0 600 600'>
-                            <circle
-                                key={`planet`+data.id+`_`+key_flag+`_t`}
-                                className='data_trash'
-                                cx={x_data} cy={y_data} r='5' fill='gray'
-                            />
+                        <svg
+                            viewBox='0 0 600 600'
+                            key={`planet`+data.id+`_`+key_flag+`_t`}>
+                            <path d={`M`+x_data+` `+y_data+` q -4 0, -6 4 l 4 -1 l 3 4 q 2 -5, -1 -7 q 2 -8, 17 -17 q -3 -3, -3 -5 l 11 -1 q -4 6, -4 9 q -4 -1, -4 -3 q -14 10, -17 17`} fill='darkgray' className='trash_body' />
+                            <path d={`M`+(x_data+6)+` `+(y_data)+` q -1 -3, -4 -3 q -2 -3, -5 -3`} stroke='darkgray' className='trash_thron1' />
+                            <path d={`M`+(x_data+10)+` `+(y_data-4)+` q -1 -4, -5 -3 q -2 -4, -5 -3`} stroke='darkgray' className='trash_thron2' />
+                            <path d={`M`+(x_data+12)+` `+(y_data-6)+` q 0 -3, -3 -4 q -2 -5, -5 -5`} stroke='darkgray' className='trash_thron1' />
+                            <path d={`M`+(x_data+18)+` `+(y_data-8)+` q -1 -4, -5 -5 q -1 -6, -5 -6`} stroke='darkgray' className='trash_thron2' />
                         </svg>
                     );
                     break;
@@ -131,20 +142,15 @@ class PlanetGroundContainer extends Component{
         
         return(
             <div className={`groundContainer ground`+(data.id+1)}>
-                {/* <div className='groundBack'>
-                    <div className='ocean_shallow'></div>
-                    <div className='ocean_middle'></div>
-                    <div className='ocean_deep'></div>
-                </div> */}
                 <div className='dataPoints'>
-                    <svg viewBox='0 0 600 600'>
+                    {/* <svg viewBox='0 0 600 600'>
                         <path d='M9 11 q 14 -20, 27 0 q 8 4, 0 8 q 0 4, -5 6 q 1 5, -8 8 q -11 -4, -9 -9 q -6 -2, -6 -5 q -8 -4, 0 -8' fill='brown'/>
                         <path d='M27 29 h -11 q -2 -2, 1 -6 v -2 q -6 -1, -7 -6 q 5 -6, 11 0 h 3 q 5 -6, 10 0 q 0 6, -6 6 v 2 q 2 4, -1 6' fill='white' stroke='white'/>
                         <circle cx='16' cy='16' r='3' fill='black' />
                         <circle cx='29' cy='16' r='3' fill='black' />
                         <circle cx='21' cy='21' r='1' fill='black' />
                         <circle cx='24' cy='21' r='1' fill='black' />
-                    </svg>
+                    </svg> */}
                     {this.point_set()}
                 </div>
                 <svg viewBox='0 0 600 600'>
