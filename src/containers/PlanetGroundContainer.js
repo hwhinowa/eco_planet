@@ -59,12 +59,12 @@ class PlanetGroundContainer extends Component{
                 if(t > 0){
                     points_push(middle_arr[i][0], middle_arr[i][1], 't');
                     t -= 1;
-                }else if(p > 0){
-                    points_push(middle_arr[i][0], middle_arr[i][1], 'p');
-                    p -= 1;
                 }else if(a > 0){
                     points_push(middle_arr[i][0], middle_arr[i][1], 'a');
                     a -= 1;
+                }else if(p > 0){
+                    points_push(middle_arr[i][0], middle_arr[i][1], 'p');
+                    p -= 1;
                 }else{
                     points_push(middle_arr[i][0], middle_arr[i][1], 'h');
                 }

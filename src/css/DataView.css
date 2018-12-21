@@ -9,5 +9,41 @@
     right:0;
     width:20rem;
     height:100%;
-    background:#333;
+    background:#222;
+}
+
+.dataBack{
+    position:relative;
+}
+.dataBack ul{
+    position:absolute;
+    top:1rem;
+    right:1rem;
+    width:41%;
+}
+.dataBack ul li{
+    margin-bottom:0.3rem;
+}
+.dataBack ul li p{
+    font-size:1rem;
+}
+.dataBack > div{
+    position:relative;
+    margin-top:-1rem;
+}
+.dataBack > div button{
+    display:block;
+    position:absolute;
+    top:0.5rem;
+    width:50%;
+    font-size:1rem;
+    border:none;
+    background:transparent;
+    cursor:pointer;
+}
+.btn_reproduce{
+    left:0.5rem;
+}
+.btn_die{
+    right:0;
 }
