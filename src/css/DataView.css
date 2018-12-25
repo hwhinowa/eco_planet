@@ -5,15 +5,15 @@
 
 .dataContainer{
     position:absolute;
-    top:0;
+    top:50%;
     right:0;
     width:20rem;
-    height:100%;
-    background:#222;
+    transform:translateY(-50%);
 }
 
 .dataBack{
     position:relative;
+    margin:2rem 0;
 }
 .dataBack ul{
     position:absolute;
