@@ -31,25 +31,53 @@ class PlanetDetail extends Component{
             planetName : 'Planet ' + name,
             planetInfo : {...this.props.data}
         }
-        console.log(this.state);
+    }
+
+    componentWillMount() {
+        const planetInfo = localStorage.planetInfo;   
+        const nextId = localStorage.nextId;
+        if(this.state.planetInfo.id !== 0){
+            localStorage.setItem('planetInfo', JSON.stringify(this.state.planetInfo));
+        }else{
+            this.setState({
+                planetInfo : JSON.parse(planetInfo),
+                nextId
+            }, function(){this.props.planet_data(JSON.parse(planetInfo)); console.log(this.state);});
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if(JSON.stringify(prevState.planetInfo) !== JSON.stringify(this.state.planetInfo)) {
+            localStorage.planetInfo = JSON.stringify(this.state.planetInfo);
+        }
+
+        if(prevState.nextId !== this.state.nextId){
+            localStorage.nextId = this.state.nextId;
+        }
     }
 
     render(){
         return(
             <div>
-                <Link to='/' className='goHome'>
+                {/* {this.state.planetInfo.id !== 0 ? */}
+                <div>
+                    <Link to='/' className='goHome'>
                     <div>Home</div>
-                </Link>
-                <h1>{this.state.planetName} Ecosystem</h1>
+                    </Link>
+                    <h1>{this.state.planetName} Ecosystem</h1>
 
-                <PlanetGroundContainer
-                    data = {this.state.planetInfo}
-                />
+                    <PlanetGroundContainer
+                        data = {this.state.planetInfo}
+                    />
 
-                <DataView
-                    data = {this.state.planetInfo}
-                />
-                {/* {this.props.match.params.number} */}
+                    <DataView
+                        data = {this.state.planetInfo}
+                    />
+                </div>
+                {/* <div>
+                    불시착하여 우주 미아가 되었습니다. 다음 생애 다시 오시기 바랍니다.
+                </div>
+                } */}
             </div>
         );
     }

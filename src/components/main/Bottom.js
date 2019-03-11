@@ -8,7 +8,8 @@ class Bottom extends Component {
             width: this.props.width ? this.props.width : 1920,
             cursor_center: this.props.cursor_center ? this.props.cursor_center : true,
             cursor_left: this.props.cursor_left ? this.props.cursor_left : false,
-            cursor_right: this.props.cursor_right ? this.props.cursor_right : false
+            cursor_right: this.props.cursor_right ? this.props.cursor_right : false,
+            opacity : this.props.opacity ? this.props.opacity : false
         }
     }
 
@@ -26,7 +27,7 @@ class Bottom extends Component {
         }
 
         return (
-            <div className={`svg_bottom_center ${(this.state.cursor_left && `rotate_left_bottom`) || (this.state.cursor_center && `rotate_center_bottom`) || (this.state.cursor_right && `rotate_right_bottom`)}`}>
+            <div className={`svg_bottom_center ${(this.state.cursor_left && `rotate_left_bottom`) || (this.state.cursor_center && `rotate_center_bottom`) || (this.state.cursor_right && `rotate_right_bottom`)} ${this.state.opacity ? `opacity` : ``}`}>
                 <svg viewBox='0 0 1840 230' style={style_bottom}>
                     {/* 1 */}
                     <path d='M173 230 V 134 H 230 V 124 H 282 V 59 L 302 36 H 378 L 388 29 H 464 L 493 0 H 759 L 793 20 H 1044 L 1074 0 H 1344 L 1372 29 H 1449 L 1459 36 H 1532 L 1554 59 V 124 H 1605 V 134 H 1662 V 230 Z' stroke='none' fill='rgba(8, 38, 45, 0.3)' />

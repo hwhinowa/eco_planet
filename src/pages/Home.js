@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Center from 'components/main/Center';
 import Bottom from 'components/main/Bottom';
@@ -21,6 +22,7 @@ class Home extends Component {
             cursor_left : false,
             cursor_center : true,
             cursor_right : false,
+            opacity : false,
             planet_info : planet_info
         }
     }
@@ -38,6 +40,18 @@ class Home extends Component {
     }
     componentWillUnmount() {
         window.removeEventListener('resize', this.updateWidth.bind(this));
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(nextProps.number !== 0){
+            this.setState({
+                opacity : true
+            }, function(){console.log(this.state)});
+        }else{
+            this.setState({
+                opacity : false
+            }, function(){console.log(this.state)});
+        }
     }
 
     // Planet Info Set
@@ -63,6 +77,11 @@ class Home extends Component {
 
             planet.push(obj);
             rate.push(obj.animal / obj.hominidae);
+        }
+        console.log(planet);
+        for(let i = 0; i < 3; i++){
+            let temp = planet[i];
+            console.log(i, temp.animal / temp.plant, temp.hominidae / (temp.animal+temp.plant));
         }
 
         return planet;
@@ -150,6 +169,7 @@ class Home extends Component {
                     cursor_center = {this.state.cursor_center}
                     cursor_left = {this.state.cursor_left}   
                     cursor_right = {this.state.cursor_right}
+                    opacity = {this.state.opacity}
                 />
 
                 <Left
@@ -157,6 +177,7 @@ class Home extends Component {
                     cursor_center = {this.state.cursor_center}
                     cursor_left = {this.state.cursor_left}   
                     cursor_right = {this.state.cursor_right}
+                    opacity = {this.state.opacity}
                 />
 
                 <Right
@@ -164,6 +185,7 @@ class Home extends Component {
                     cursor_center = {this.state.cursor_center}
                     cursor_left = {this.state.cursor_left}   
                     cursor_right = {this.state.cursor_right}
+                    opacity = {this.state.opacity}
                 />
 
                 <Bottom
@@ -171,13 +193,19 @@ class Home extends Component {
                     cursor_center = {this.state.cursor_center}
                     cursor_left = {this.state.cursor_left}   
                     cursor_right = {this.state.cursor_right}
+                    opacity = {this.state.opacity}
                 />
 
-                <div className='bottom_box left' style={style_bottom_box}></div>
+                <div className={`bottom_box left ${this.state.opacity && `opacity`}`} style={style_bottom_box}></div>
                 <div className='bottom_box right' style={style_bottom_box}></div>
             </div>
         );
     }
 }
 
-export default Home;
+//export default Home;
+const mapStateToProps = (state) => ({
+    number : state.planet.number
+});
+
+export default connect(mapStateToProps)(Home);

@@ -9,10 +9,10 @@ class PlanetPopUp extends Component {
     constructor(props){
         super(props);
 
+        let data = this.props.info;
+
         this.state = {
-            info : {
-                ...this.props.info
-            },
+            info : this.set_environment(data)
         }
     }
 
@@ -32,52 +32,85 @@ class PlanetPopUp extends Component {
     }
 
     closePopup=(num)=>{
+        let self = this;
         let popup = document.querySelector('.planet_popup'+num);
-        popup.style.display = 'none';
-        this.props.planet_num(0);
+        popup.classList.add('hide');
+        setTimeout(function(){
+            popup.style.display = 'none';
+            popup.classList.remove('hide');
+            self.props.planet_num(0);
+        }, 200);
     }
 
     planetDataSet=(data)=>{
         this.props.planet_data(data);
-        // this.context.router.history.push("/class");
+    }
+
+    set_environment=(data)=>{
+        let items = data;
+
+        switch(items.id){
+            case 1:
+                items.planet_name = 'X';
+                items.ground = 30;
+                items.ocean = 65;
+                break;
+            case 2:
+                items.planet_name = 'Y';
+                items.ground = 25;
+                items.ocean = 70;
+                break;
+            case 3:
+                items.planet_name = 'Z';
+                items.ground = 10;
+                items.ocean = 50;
+                break;
+            default:
+                items.planet_name = '';
+                items.ground = 0;
+                items.ocean = 0;
+                break;
+        }
+        
+        return items;
     }
 
     render() {
         let info = this.state.info;
-        let planet_name = '';
-        let ground = 0;
-        let ocean = 0;
-        if(info.id === 1){
-            planet_name = 'X';
-            ground = 30;
-            ocean = 65;
-        }else if(info.id === 2){
-            planet_name = 'Y';
-            ground = 25;
-            ocean = 70;
-        }else{
-            planet_name = 'Z';
-            ground = 10;
-            ocean = 50;
-        }
+
         return (
             <div className={`planet_popup_wrap planet_popup${info.id} ${this.props.currentPlanet === info.id && `active`}`}>
-                <p className='planet_name'>Planet {planet_name}</p>
-                <button onClick={()=>this.closePopup(info.id)}>X</button>
-                <p>ground : {ground}h</p>
-                <p>ocean : {ocean}h</p>
-                <p>plant : {info.plant / 100}m</p>
-                <p>animal : {info.animal / 100}m</p>
-                <p>hominidae : {info.hominidae / 100}m</p>
-                <Link to={`/detail/`+info.id} onClick={()=>this.planetDataSet(info)}>Go to the planet!</Link>
+                <div className='popup_box'>
+                    <div className='popup_left'>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <div className='popup_center'>
+                        <div></div>
+                        <div>
+                            <div></div>
+                            <div>
+                                <p className='planet_name'>Planet {info.planet_name}</p>
+                                <button onClick={()=>this.closePopup(info.id)}>X</button>
+                                <p>ground : {info.ground}h</p>
+                                <p>ocean : {info.ocean}h</p>
+                                <p>plant : {info.plant / 100}m</p>
+                                <p>animal : {info.animal / 100}m</p>
+                                <p>hominidae : {info.hominidae / 100}m</p>
+                                <Link to={`/detail/`+info.id} onClick={()=>this.planetDataSet(info)}>Go!</Link>
+                            </div>
+                        </div>
+                        <div></div>
+                    </div>
+                    <div className='popup_right'>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
             </div>
         );
     }
 }
-
-// PlanetPopUp.contextTypes={
-//     router : React.PropTypes.object
-// };
 
 const mapStateToProps = (state) => ({
     number : state.planet.number

@@ -8,7 +8,8 @@ class Center extends Component {
             width : this.props.width ? this.props.width : 1920,
             cursor_center : this.props.cursor_center ? this.props.cursor_center : true,
             cursor_left : this.props.cursor_left ? this.props.cursor_left : false,
-            cursor_right : this.props.cursor_right ? this.props.cursor_right : false
+            cursor_right : this.props.cursor_right ? this.props.cursor_right : false,
+            opacity : this.props.opacity ? this.props.opacity : false
         }
     }
 
@@ -26,7 +27,7 @@ class Center extends Component {
         }
 
         return (
-            <div className={`svg_target ${(this.state.cursor_left && `rotate_left`) || (this.state.cursor_center && `rotate_center`) || (this.state.cursor_right && `rotate_right`)}`}>
+            <div className={`svg_target ${(this.state.cursor_left && `rotate_left`) || (this.state.cursor_center && `rotate_center`) || (this.state.cursor_right && `rotate_right`)} ${this.state.opacity ? `opacity` : ``}`}>
                 <svg viewBox='0 0 600 530' style={style_center}>
                     {/* 1 */}
                     <circle cx='300' cy='280' r='5' stroke='#fff' fill='none' />

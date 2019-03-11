@@ -8,7 +8,8 @@ class Left extends Component {
             width: this.props.width ? this.props.width : 1920,
             cursor_center: this.props.cursor_center ? this.props.cursor_center : true,
             cursor_left: this.props.cursor_left ? this.props.cursor_left : false,
-            cursor_right: this.props.cursor_right ? this.props.cursor_right : false
+            cursor_right: this.props.cursor_right ? this.props.cursor_right : false,
+            opacity : this.props.opacity ? this.props.opacity : false
         }
     }
 
@@ -26,7 +27,7 @@ class Left extends Component {
         }
 
         return (
-            <div className={`svg_left ${(this.state.cursor_left && `rotate_left`) || (this.state.cursor_center && `rotate_center`) || (this.state.cursor_right && `rotate_right`)}`}>
+            <div className={`svg_left ${(this.state.cursor_left && `rotate_left`) || (this.state.cursor_center && `rotate_center`) || (this.state.cursor_right && `rotate_right`)} ${this.state.opacity ? `opacity` : ``}`}>
                 <svg viewBox='0 0 230 550' style={style_left}>
                     {/* 1 */}
                     <path d='M0 5 H 140 L 192 53 C 139 166, 141 406, 192 497 L 140 545 H 0' stroke='#1c3b36' strokeWidth='3' fill='rgba(28,59,54,0.2)' />

@@ -5,10 +5,93 @@ import 'css/PlanetGround.css';
 class PlanetGroundContainer extends Component{
     constructor(props){
         super(props);
+        let get_data = this.props.data;
 
         this.state = {
-            data : this.props.data
+            data : get_data,
+            data_status : this.set_status(get_data)
         };
+        console.log(this.state.data);
+    }
+
+    componentWillReceiveProps(nextProps){
+        console.log(nextProps.data);
+        this.setState({
+            data : nextProps.data,
+            data_status : this.set_status(nextProps.data)
+        });
+    }
+
+    componentWillMount() {
+        const planetInfo = localStorage.planetInfo;
+        const nextId = localStorage.nextId;
+        if(this.state.data.id !== 0){
+            localStorage.setItem('planetInfo', JSON.stringify(this.state.data));
+        }else{
+            this.setState({
+                planetInfo : JSON.parse(planetInfo),
+                nextId
+            }, function(){this.props.planet_data(JSON.parse(planetInfo)); console.log(this.state);});
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if(JSON.stringify(prevState.data) !== JSON.stringify(this.state.data)) {
+            localStorage.planetInfo = JSON.stringify(this.state.data);
+        }
+
+        if(prevState.nextId !== this.state.nextId){
+            localStorage.nextId = this.state.nextId;
+        }
+    }
+
+
+
+    set_status = (data) =>{
+        let result = {plant : 0, animal : 0, hominidae : 0, trash : 0};
+
+        if(data){
+            if(data.animal / data.plant < 1.4){
+                if(data.animal / data.plant < 0.4){
+                    result.animal = 1;
+                }else{
+                    result.animal = 2;
+                }
+            }else if(data.animal / data.plant > 2){
+                result.animal = 4;
+            }else{
+                result.animal = 3;
+            }
+
+            if((data.hominidae / (data.plant + data.animal)) < 0.5){
+                if((data.hominidae / (data.plant + data.animal)) < 0.2){
+                    result.hominidae = 1;
+                }else{
+                    result.hominidae = 2;
+                }
+            }else if((data.hominidae / (data.plant + data.animal)) > 0.8){
+                result.hominidae = 4;
+            }else{
+                result.hominidae = 3;
+            }
+
+            if(data.plant / data.ground / 100 < 1){
+                if(data.plant / data.ground / 100 < 0.4){
+                    result.plant = 1;
+                }else{
+                    result.plant = 2;
+                }
+            }else if(data.plant / data.ground / 100 > 1.5){
+                result.plant = 4;
+            }else{
+                result.plant = 3;
+            }
+            
+        }else{
+            result = {plant : 3, animal : 3, hominidae : 3, trash : 3};
+        }
+
+        return result;
     }
 
     point_set = () => {
@@ -34,7 +117,6 @@ class PlanetGroundContainer extends Component{
         p = Math.floor(data.plant / (data.animal + data.plant + data.hominidae) / rate_ref * 100);
         a = Math.floor(data.animal / (data.animal + data.plant + data.hominidae) / rate_ref * 100);
         h = rate_ref - p - a;
-        console.log(p, a, h, t);
         let middle_arr;
 
         switch(data.id){
@@ -137,8 +219,13 @@ class PlanetGroundContainer extends Component{
         return result;
     }
 
+    show_status = () =>{
+
+    }
+
     render(){
         let data = this.state.data;
+        console.log(this.state);
         
         return(
             <div className={`groundContainer ground`+(data.id+1)}>

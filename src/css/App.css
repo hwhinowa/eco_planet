@@ -71,13 +71,27 @@ body, #root, #root > div, .App{
 .bottom_box.right{
     right:0;
 }
+.svg_target.opacity,
+.svg_left.opacity svg,
+.svg_right.opacity svg,
+.svg_bottom_center.opacity,
+.bottom_box.opacity{
+    opacity:0.3;
+}
+.svg_target,
+.svg_bottom_center,
+.svg_left svg,
+.svg_right svg{
+    transition:opacity 1s;
+}
+
 svg{
     width:100%;
     height:100%;
     background:transparent;
 }
 
-.rotate_left{
+/* .rotate_left{
     transform:rotate3d(1, 1, 1, -5deg);
     transition:transform 0.5s;
 }
@@ -103,7 +117,7 @@ svg{
     bottom:-10px;
     transform:rotate3d(1, 1, 1, 2deg);
     transition:all 0.5s;
-}
+} */
 
 /* Center - Target */
 .svg_target circle:nth-of-type(1){

@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as planetActions from 'store/modules/planet';
 
 import 'css/DataView.css';
 
@@ -8,6 +10,36 @@ class DataView extends Component{
 
         this.state = {
             data : this.props.data
+        }
+    }
+
+    componentWillReceiveProps(nextProps){
+        console.log(nextProps.data);
+        this.setState({
+            data : nextProps.data
+        });
+    }
+
+    componentWillMount() {
+        const planetInfo = localStorage.planetInfo;
+        const nextId = localStorage.nextId;
+        if(this.state.data.id !== 0){
+            localStorage.setItem('planetInfo', JSON.stringify(this.state.data));
+        }else{
+            this.setState({
+                planetInfo : JSON.parse(planetInfo),
+                nextId
+            });
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if(JSON.stringify(prevState.data) !== JSON.stringify(this.state.data)) {
+            localStorage.planetInfo = JSON.stringify(this.state.data);
+        }
+
+        if(prevState.nextId !== this.state.nextId){
+            localStorage.nextId = this.state.nextId;
         }
     }
 
@@ -54,8 +86,8 @@ class DataView extends Component{
                         </li>
                     </ul>
                     <div>
-                        <button class='btn_reproduce'>REPRODUCE</button>
-                        <button class='btn_die'>DIE</button>
+                        <button className='btn_reproduce'>REPRODUCE</button>
+                        <button className='btn_die'>DIE</button>
                         <svg viewBox='0 0 200 30'>
                             <path d='M10 17 l 10 -13 h 72 v 13 z' stroke='gray' strokeWidth='1'/>
                             <path d='M107 17 l 10 -13 h 72 v 13 z' stroke='gray' strokeWidth='1'/>
@@ -82,8 +114,8 @@ class DataView extends Component{
                         </li>
                     </ul>
                     <div>
-                        <button class='btn_reproduce'>REPRODUCE</button>
-                        <button class='btn_die'>DIE</button>
+                        <button className='btn_reproduce'>REPRODUCE</button>
+                        <button className='btn_die'>DIE</button>
                         <svg viewBox='0 0 200 30'>
                             <path d='M10 17 l 10 -13 h 72 v 13 z' stroke='gray' strokeWidth='1'/>
                             <path d='M107 17 l 10 -13 h 72 v 13 z' stroke='gray' strokeWidth='1'/>
@@ -114,8 +146,8 @@ class DataView extends Component{
                         </li>
                     </ul>
                     <div>
-                        <button class='btn_reproduce'>REPRODUCE</button>
-                        <button class='btn_die'>DIE</button>
+                        <button className='btn_reproduce'>REPRODUCE</button>
+                        <button className='btn_die'>DIE</button>
                         <svg viewBox='0 0 200 30'>
                             <path d='M10 17 l 10 -13 h 72 v 13 z' stroke='gray' strokeWidth='1'/>
                             <path d='M107 17 l 10 -13 h 72 v 13 z' stroke='gray' strokeWidth='1'/>
@@ -140,27 +172,35 @@ class DataView extends Component{
                         <li><p>Type : trash</p></li>
                         <li><p>Amount : {data.trash}</p></li>
                         <li>
-                            <p>Health</p>
+                            <p>poison</p>
                             <div><span></span></div>
                         </li>
                     </ul>
                     <div>
-                        <button class='btn_reproduce'>REPRODUCE</button>
-                        <button class='btn_die'>DIE</button>
+                        <button className='btn_reproduce'>REPRODUCE</button>
+                        <button className='btn_die'>DIE</button>
                         <svg viewBox='0 0 200 30'>
                             <path d='M10 17 l 10 -13 h 72 v 13 z' stroke='gray' strokeWidth='1'/>
                             <path d='M107 17 l 10 -13 h 72 v 13 z' stroke='gray' strokeWidth='1'/>
                         </svg>
                     </div>
                 </div>
-                {/* {data.hominidae}<br/>
-                {data.animal}<br/>
-                {data.plant}<br/>
-                {data.trash} */}
             </div>
         )
     }
-
 }
 
-export default DataView;
+const mapStateToProps = (state) => ({
+    data : state.planet.data
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    planet_num : (number = 0) => {
+        dispatch(planetActions.planet_num(number));
+    },
+    planet_data : (data = {})=> {
+        dispatch(planetActions.planet_data(data));
+    }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(DataView);
