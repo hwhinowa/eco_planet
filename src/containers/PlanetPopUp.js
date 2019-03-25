@@ -94,9 +94,9 @@ class PlanetPopUp extends Component {
                                 <button onClick={()=>this.closePopup(info.id)}>X</button>
                                 <p>ground : {info.ground}h</p>
                                 <p>ocean : {info.ocean}h</p>
-                                <p>plant : {info.plant / 100}m</p>
-                                <p>animal : {info.animal / 100}m</p>
-                                <p>hominidae : {info.hominidae / 100}m</p>
+                                <p>plant : {info.plant.amount / 100}m</p>
+                                <p>animal : {info.animal.amount / 100}m</p>
+                                <p>native : {info.native.amount / 100}m</p>
                                 <Link to={`/detail/`+info.id} onClick={()=>this.planetDataSet(info)}>Go!</Link>
                             </div>
                         </div>

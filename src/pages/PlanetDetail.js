@@ -34,7 +34,7 @@ class PlanetDetail extends Component{
     }
 
     componentWillMount() {
-        const planetInfo = localStorage.planetInfo;   
+        const planetInfo = localStorage.planetInfo;
         const nextId = localStorage.nextId;
         if(this.state.planetInfo.id !== 0){
             localStorage.setItem('planetInfo', JSON.stringify(this.state.planetInfo));
@@ -59,7 +59,6 @@ class PlanetDetail extends Component{
     render(){
         return(
             <div>
-                {/* {this.state.planetInfo.id !== 0 ? */}
                 <div>
                     <Link to='/' className='goHome'>
                     <div>Home</div>
@@ -77,7 +76,7 @@ class PlanetDetail extends Component{
                 {/* <div>
                     불시착하여 우주 미아가 되었습니다. 다음 생애 다시 오시기 바랍니다.
                 </div>
-                } */}
+                */}
             </div>
         );
     }

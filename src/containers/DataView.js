@@ -7,16 +7,19 @@ import 'css/DataView.css';
 class DataView extends Component{
     constructor(props){
         super(props);
+        let get_data = this.props.data;
 
         this.state = {
-            data : this.props.data
-        }
+            data : get_data,
+            data_status : this.set_status(get_data)
+        };
+        console.log(this.state);
     }
 
     componentWillReceiveProps(nextProps){
-        console.log(nextProps.data);
         this.setState({
-            data : nextProps.data
+            data : nextProps.data,
+            data_status : this.set_status(nextProps.data)
         });
     }
 
@@ -27,7 +30,8 @@ class DataView extends Component{
             localStorage.setItem('planetInfo', JSON.stringify(this.state.data));
         }else{
             this.setState({
-                planetInfo : JSON.parse(planetInfo),
+                data : JSON.parse(planetInfo),
+                data_status : this.set_status(JSON.parse(planetInfo)),
                 nextId
             });
         }
@@ -43,8 +47,62 @@ class DataView extends Component{
         }
     }
 
+    set_status = (data) =>{
+        let result = {plant : 0, animal : 0, native : 0, trash : 0};
+
+        if(data){
+            if(data.animal.amount / data.plant.amount < 1.4){
+                if(data.animal.amount / data.plant.amount < 0.4){
+                    result.animal = 1;
+                }else{
+                    result.animal = 2;
+                }
+            }else if(data.animal.amount / data.plant.amount > 2){
+                result.animal = 4;
+            }else{
+                result.animal = 3;
+            }
+
+            if((data.native.amount / (data.plant.amount + data.animal.amount)) < 0.5){
+                if((data.native.amount / (data.plant.amount + data.animal.amount)) < 0.2){
+                    result.native = 1;
+                }else{
+                    result.native = 2;
+                }
+            }else if((data.native.amount / (data.plant.amount + data.animal.amount)) > 0.8){
+                result.native = 4;
+            }else{
+                result.native = 3;
+            }
+
+            if(data.plant.amount / data.ground.amount / 100 < 1){
+                if(data.plant.amount / data.ground.amount / 100 < 0.4){
+                    result.plant = 1;
+                }else{
+                    result.plant = 2;
+                }
+            }else if(data.plant.amount / data.ground.amount / 100 > 1.5){
+                result.plant = 4;
+            }else{
+                result.plant = 3;
+            }
+        }else{
+            result = {plant : 3, animal : 3, native : 3, trash : 3};
+        }
+
+        return result;
+    }
+
+    planetDataSet=(data, target, action)=>{
+        console.log(data, target, action);
+        var test = data[target];
+        console.log(test);
+        // this.props.planet_data(data);
+    }
+
     render(){
         let data = this.state.data;
+        let status = this.state.data_status;
         let x_data1 = 45;
         let y_data1 = 25;
         let x_data2 = 50;
@@ -54,7 +112,7 @@ class DataView extends Component{
         let x_data4 = 45;
         let y_data4 = 42;
 
-        console.log(data);
+        console.log(this.state);
 
         return(
             <div className='dataContainer'>
@@ -79,14 +137,14 @@ class DataView extends Component{
                     </svg>
                     <ul>
                         <li><p>Type : animal</p></li>
-                        <li><p>Amount : {data.animal}</p></li>
+                        <li><p>Amount : {data.animal.amount / 100}m</p></li>
                         <li>
                             <p>Health</p>
-                            <div><span></span></div>
+                            <div className={`health data_status_`+status.animal}><span></span></div>
                         </li>
                     </ul>
                     <div>
-                        <button className='btn_reproduce'>REPRODUCE</button>
+                        <button className='btn_reproduce' onClick={()=>this.planetDataSet(data, 'animal', 'add')}>REPRODUCE</button>
                         <button className='btn_die'>DIE</button>
                         <svg viewBox='0 0 200 30'>
                             <path d='M10 17 l 10 -13 h 72 v 13 z' stroke='gray' strokeWidth='1'/>
@@ -107,10 +165,10 @@ class DataView extends Component{
                     </svg>
                     <ul>
                         <li><p>Type : plant</p></li>
-                        <li><p>Amount : {data.plant}</p></li>
+                        <li><p>Amount : {data.plant.amount / 100}m</p></li>
                         <li>
                             <p>Health</p>
-                            <div><span></span></div>
+                            <div className={`health data_status_`+status.plant}><span></span></div>
                         </li>
                     </ul>
                     <div>
@@ -130,19 +188,19 @@ class DataView extends Component{
                         <line x1='98' y1='54' x2='190' y2='54' stroke='gray' />
                         <line x1='98' y1='54' x2='148' y2='54' stroke='#ddd' strokeWidth='3' />
 
-                        <path d={`M`+x_data3+` `+y_data3+` q 14 -20, 27 0 q 8 4, 0 8 q 0 4, -5 6 q 1 5, -8 8 q -11 -4, -9 -9 q -6 -2, -6 -5 q -8 -4, 0 -8`} fill='brown' className='hominidae_hair'/>
-                        <path d={`M`+(x_data3+18)+` `+(y_data3+18)+`h -11 q -2 -2, 1 -6 v -2 q -6 -1, -7 -6 q 5 -6, 11 0 h 3 q 5 -6, 10 0 q 0 6, -6 6 v 2 q 2 4, -1 6`} fill='white' stroke='white' className='hominidae_face'/>
-                        <circle cx={x_data3+7} cy={y_data3+5} r='3' fill='black' className='hominidae_eye'/>
-                        <circle cx={x_data3+20} cy={y_data3+5} r='3' fill='black' className='hominidae_eye'/>
+                        <path d={`M`+x_data3+` `+y_data3+` q 14 -20, 27 0 q 8 4, 0 8 q 0 4, -5 6 q 1 5, -8 8 q -11 -4, -9 -9 q -6 -2, -6 -5 q -8 -4, 0 -8`} fill='brown' className='native_hair'/>
+                        <path d={`M`+(x_data3+18)+` `+(y_data3+18)+`h -11 q -2 -2, 1 -6 v -2 q -6 -1, -7 -6 q 5 -6, 11 0 h 3 q 5 -6, 10 0 q 0 6, -6 6 v 2 q 2 4, -1 6`} fill='white' stroke='white' className='native_face'/>
+                        <circle cx={x_data3+7} cy={y_data3+5} r='3' fill='black' className='native_eye'/>
+                        <circle cx={x_data3+20} cy={y_data3+5} r='3' fill='black' className='native_eye'/>
                         <circle cx={x_data3+12} cy={y_data3+10} r='1' fill='black' />
                         <circle cx={x_data3+15} cy={y_data3+10} r='1' fill='black' />
                     </svg>
                     <ul>
-                        <li><p>Type : hominidae</p></li>
-                        <li><p>Amount : {data.hominidae}</p></li>
+                        <li><p>Type : native</p></li>
+                        <li><p>Amount : {data.native.amount / 100}m</p></li>
                         <li>
                             <p>Health</p>
-                            <div><span></span></div>
+                            <div className={`health data_status_`+status.native}><span></span></div>
                         </li>
                     </ul>
                     <div>
@@ -170,10 +228,10 @@ class DataView extends Component{
                     </svg>
                     <ul>
                         <li><p>Type : trash</p></li>
-                        <li><p>Amount : {data.trash}</p></li>
+                        <li><p>Amount : {data.trash.amount}kt</p></li>
                         <li>
                             <p>poison</p>
-                            <div><span></span></div>
+                            <div className={`poison data_status_`+status.trash}><span></span></div>
                         </li>
                     </ul>
                     <div>

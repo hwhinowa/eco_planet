@@ -11,7 +11,7 @@ class PlanetGroundContainer extends Component{
             data : get_data,
             data_status : this.set_status(get_data)
         };
-        console.log(this.state.data);
+        console.log(this.state);
     }
 
     componentWillReceiveProps(nextProps){
@@ -45,50 +45,47 @@ class PlanetGroundContainer extends Component{
         }
     }
 
-
-
     set_status = (data) =>{
-        let result = {plant : 0, animal : 0, hominidae : 0, trash : 0};
+        let result = {plant : 0, animal : 0, native : 0, trash : 0};
 
         if(data){
-            if(data.animal / data.plant < 1.4){
-                if(data.animal / data.plant < 0.4){
+            if(data.animal.amount / data.plant.amount < 1.4){
+                if(data.animal.amount / data.plant.amount < 0.4){
                     result.animal = 1;
                 }else{
                     result.animal = 2;
                 }
-            }else if(data.animal / data.plant > 2){
+            }else if(data.animal.amount / data.plant.amount > 2){
                 result.animal = 4;
             }else{
                 result.animal = 3;
             }
 
-            if((data.hominidae / (data.plant + data.animal)) < 0.5){
-                if((data.hominidae / (data.plant + data.animal)) < 0.2){
-                    result.hominidae = 1;
+            if((data.native.amount / (data.plant.amount + data.animal.amount)) < 0.5){
+                if((data.native.amount / (data.plant.amount + data.animal.amount)) < 0.2){
+                    result.native = 1;
                 }else{
-                    result.hominidae = 2;
+                    result.native = 2;
                 }
-            }else if((data.hominidae / (data.plant + data.animal)) > 0.8){
-                result.hominidae = 4;
+            }else if((data.native.amount / (data.plant.amount + data.animal.amount)) > 0.8){
+                result.native = 4;
             }else{
-                result.hominidae = 3;
+                result.native = 3;
             }
 
-            if(data.plant / data.ground / 100 < 1){
-                if(data.plant / data.ground / 100 < 0.4){
+            if(data.plant.amount / data.ground.amount / 100 < 1){
+                if(data.plant.amount / data.ground.amount / 100 < 0.4){
                     result.plant = 1;
                 }else{
                     result.plant = 2;
                 }
-            }else if(data.plant / data.ground / 100 > 1.5){
+            }else if(data.plant.amount / data.ground.amount / 100 > 1.5){
                 result.plant = 4;
             }else{
                 result.plant = 3;
             }
-            
         }else{
-            result = {plant : 3, animal : 3, hominidae : 3, trash : 3};
+            result = {plant : 3, animal : 3, native : 3, trash : 3};
         }
 
         return result;
@@ -96,6 +93,7 @@ class PlanetGroundContainer extends Component{
 
     point_set = () => {
         let data = this.state.data;
+        let data_status = this.state.data_status;
         let points_arr1, points_arr2, points_arr3, result = [];
 
         points_arr1 = [
@@ -112,10 +110,10 @@ class PlanetGroundContainer extends Component{
 
         let p, a, h, t = 0;
 
-        t = data.hominidae / data.ground > 0.7 ? 3 : 2;
+        t = data.native.amount / data.ground.amount > 0.7 ? 3 : 2;
         let rate_ref = 12 - t;
-        p = Math.floor(data.plant / (data.animal + data.plant + data.hominidae) / rate_ref * 100);
-        a = Math.floor(data.animal / (data.animal + data.plant + data.hominidae) / rate_ref * 100);
+        p = Math.floor(data.plant.amount / (data.animal.amount + data.plant.amount + data.native.amount) / rate_ref * 100);
+        a = Math.floor(data.animal.amount / (data.animal.amount + data.plant.amount + data.native.amount) / rate_ref * 100);
         h = rate_ref - p - a;
         let middle_arr;
 
@@ -159,7 +157,7 @@ class PlanetGroundContainer extends Component{
                     result.push(
                         <svg
                             viewBox='0 0 600 600'
-                            key={`planet`+data.id+`_`+key_flag+`_p`}>
+                            key={`planet`+data.id+`_`+key_flag+`_p`} className={`plant_status_`+data_status.plant}>
                             <path d={`M`+x_data+` `+y_data+` q -13 3, -10 -4 q 0 -10, 8 -7 q 1 -8, 10 -5 q 8 2, 3 10 q 8 2, 3 10 q -5 8, -11 -2 l -3 -2`} fill='#008000' className='plant_leaf'/>
                             <line x1={x_data+1} y1={y_data+1} x2={x_data-3} y2={y_data+14} stroke='#66350d' strokeWidth='3' className='plant_trunk'/>
                         </svg>
@@ -169,7 +167,7 @@ class PlanetGroundContainer extends Component{
                     result.push(
                         <svg
                             viewBox='0 0 600 600'
-                            key={`planet`+data.id+`_`+key_flag+`_a`}>
+                            key={`planet`+data.id+`_`+key_flag+`_a`}  className={`animal_status_`+data_status.animal}>
                             <path d={`M`+x_data+` `+y_data+` q 7 -7, 15 0 v 14 q -8 8, -15 1 v -15`} fill='#222' stroke='#ddd' className='animal_body'/>
                             <circle cx={x_data+7} cy={y_data+4} r='5' stroke='#333' fill='#eee' className='animal_eye' />
                             <circle cx={x_data+7} cy={y_data+4} r='2' fill='black' className='animal_pupil'/>
@@ -187,11 +185,11 @@ class PlanetGroundContainer extends Component{
                     result.push(
                         <svg
                             viewBox='0 0 600 600'
-                            key={`planet`+data.id+`_`+key_flag+`_h`}>
-                            <path d={`M`+x_data+` `+y_data+` q 14 -20, 27 0 q 8 4, 0 8 q 0 4, -5 6 q 1 5, -8 8 q -11 -4, -9 -9 q -6 -2, -6 -5 q -8 -4, 0 -8`} fill='brown' className='hominidae_hair'/>
-                            <path d={`M`+(x_data+18)+` `+(y_data+18)+`h -11 q -2 -2, 1 -6 v -2 q -6 -1, -7 -6 q 5 -6, 11 0 h 3 q 5 -6, 10 0 q 0 6, -6 6 v 2 q 2 4, -1 6`} fill='white' stroke='white' className='hominidae_face'/>
-                            <circle cx={x_data+7} cy={y_data+5} r='3' fill='black' className='hominidae_eye'/>
-                            <circle cx={x_data+20} cy={y_data+5} r='3' fill='black' className='hominidae_eye'/>
+                            key={`planet`+data.id+`_`+key_flag+`_h`} className={`native_status_`+data_status.native}>
+                            <path d={`M`+x_data+` `+y_data+` q 14 -20, 27 0 q 8 4, 0 8 q 0 4, -5 6 q 1 5, -8 8 q -11 -4, -9 -9 q -6 -2, -6 -5 q -8 -4, 0 -8`} fill='brown' className='native_hair'/>
+                            <path d={`M`+(x_data+18)+` `+(y_data+18)+`h -11 q -2 -2, 1 -6 v -2 q -6 -1, -7 -6 q 5 -6, 11 0 h 3 q 5 -6, 10 0 q 0 6, -6 6 v 2 q 2 4, -1 6`} fill='white' stroke='white' className='native_face'/>
+                            <circle cx={x_data+7} cy={y_data+5} r='3' fill='black' className='native_eye'/>
+                            <circle cx={x_data+20} cy={y_data+5} r='3' fill='black' className='native_eye'/>
                             <circle cx={x_data+12} cy={y_data+10} r='1' fill='black' />
                             <circle cx={x_data+15} cy={y_data+10} r='1' fill='black' />
                         </svg>
@@ -201,7 +199,7 @@ class PlanetGroundContainer extends Component{
                     result.push(
                         <svg
                             viewBox='0 0 600 600'
-                            key={`planet`+data.id+`_`+key_flag+`_t`}>
+                            key={`planet`+data.id+`_`+key_flag+`_t`} className={`trash_status_`+data_status.trash}>
                             <path d={`M`+x_data+` `+y_data+` q -4 0, -6 4 l 4 -1 l 3 4 q 2 -5, -1 -7 q 2 -8, 17 -17 q -3 -3, -3 -5 l 11 -1 q -4 6, -4 9 q -4 -1, -4 -3 q -14 10, -17 17`} fill='darkgray' className='trash_body' />
                             <path d={`M`+(x_data+6)+` `+(y_data)+` q -1 -3, -4 -3 q -2 -3, -5 -3`} stroke='darkgray' className='trash_thron1' />
                             <path d={`M`+(x_data+10)+` `+(y_data-4)+` q -1 -4, -5 -3 q -2 -4, -5 -3`} stroke='darkgray' className='trash_thron2' />
@@ -219,25 +217,12 @@ class PlanetGroundContainer extends Component{
         return result;
     }
 
-    show_status = () =>{
-
-    }
-
     render(){
         let data = this.state.data;
-        console.log(this.state);
         
         return(
             <div className={`groundContainer ground`+(data.id+1)}>
                 <div className='dataPoints'>
-                    {/* <svg viewBox='0 0 600 600'>
-                        <path d='M9 11 q 14 -20, 27 0 q 8 4, 0 8 q 0 4, -5 6 q 1 5, -8 8 q -11 -4, -9 -9 q -6 -2, -6 -5 q -8 -4, 0 -8' fill='brown'/>
-                        <path d='M27 29 h -11 q -2 -2, 1 -6 v -2 q -6 -1, -7 -6 q 5 -6, 11 0 h 3 q 5 -6, 10 0 q 0 6, -6 6 v 2 q 2 4, -1 6' fill='white' stroke='white'/>
-                        <circle cx='16' cy='16' r='3' fill='black' />
-                        <circle cx='29' cy='16' r='3' fill='black' />
-                        <circle cx='21' cy='21' r='1' fill='black' />
-                        <circle cx='24' cy='21' r='1' fill='black' />
-                    </svg> */}
                     {this.point_set()}
                 </div>
                 <svg viewBox='0 0 600 600'>
@@ -254,7 +239,7 @@ class PlanetGroundContainer extends Component{
                     }
                 </svg>
             </div>
-        )
+        );
     }
 
 }

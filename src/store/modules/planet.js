@@ -22,15 +22,7 @@ const initialState = {
     number : 0,
     data : {
         id : 0,
-        hominidae : 0,
-        animal : 0,
-        plant : 0,
-        trash : 0,
-        ground : 0,
-        ocean : 0
-    },
-    data_detail : {
-        hominidae : {
+        native : {
             amount : 0,
             health : 0
         },
@@ -45,7 +37,9 @@ const initialState = {
         trash : {
             amount : 0,
             poison : 0
-        }
+        },
+        ground : 0,
+        ocean : 0
     }
 };
 

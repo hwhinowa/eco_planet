@@ -46,7 +46,7 @@ Planet.propTypes = {
 };
 
 Planet.defaultProps = {
-    info : {id:0, ground:0, ocean:0, plant:0, animal:0, hominidae:0, trash:0},
+    info : {id:0, ground:0, ocean:0, plant:{amount:0, health:0}, animal:{amount:0, health:0}, native:{amount:0, health:0}, trash:{amount:0, poison:0}},
     onPlanetNumber : () => console.warn('onPlanetNumber not defined')
 }
 

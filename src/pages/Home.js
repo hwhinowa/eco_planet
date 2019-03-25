@@ -62,26 +62,30 @@ class Home extends Component {
         for(let i = 0; i < 3; i++){
             let obj = {};
             obj.id = i + 1;
-            obj.hominidae = this.randomRange(80, 170) * 10;
+            obj.native = {amount : this.randomRange(80, 170) * 10};
             if(i === 2){
                 if(rate[0] > 1 && rate[1] > 1){
-                    obj.animal = this.randomRange(50, 90) * 10;
+                    obj.animal = {amount : this.randomRange(50, 90) * 10};
                 }else{
-                    obj.animal = this.randomRange(100, 300) * 10;
+                    obj.animal = {amount : this.randomRange(100, 300) * 10};
                 }
             }else{
-                obj.animal = this.randomRange(100, 300) * 10;
+                obj.animal = {amount : this.randomRange(100, 300) * 10};
             }
-            obj.plant = this.randomRange(obj.hominidae - 300, obj.hominidae + 300);
-            obj.trash = 0;
+            obj.native.health = 0;
+            obj.animal.health = 0;
+            obj.plant = {amount : this.randomRange(obj.native.amount - 300, obj.native.amount + 300), health : 0};
+
+            let trash_temp = Math.floor((obj.plant.amount + obj.animal.amount) / 3);
+            obj.trash = {amount: trash_temp, poison:0};
 
             planet.push(obj);
-            rate.push(obj.animal / obj.hominidae);
+            rate.push(obj.animal.amoount / obj.native.amount);
         }
         console.log(planet);
         for(let i = 0; i < 3; i++){
             let temp = planet[i];
-            console.log(i, temp.animal / temp.plant, temp.hominidae / (temp.animal+temp.plant));
+            console.log(i, temp.animal.amount / temp.plant.amount, temp.native.amount / (temp.animal.amount+temp.plant.amount));
         }
 
         return planet;
