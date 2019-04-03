@@ -10,6 +10,9 @@
     width:20rem;
     transform:translateY(-50%);
 }
+button:focus{
+    outline:none;
+}
 
 .dataBack{
     position:relative;
@@ -38,12 +41,6 @@
     margin-top: 1px;
     background: #333;
 }
-/* .dataBack ul li:last-child div span{
-    display:block;
-    width:50%;
-    height:100%;
-    background:orange;
-} */
 .dataBack > div{
     position:relative;
     margin-top:-1rem;
@@ -58,6 +55,9 @@
     background:transparent;
     cursor:pointer;
 }
+/* .view_btn_area:hover{
+    fill:#333;
+} */
 .btn_reproduce{
     left:0.5rem;
 }
@@ -87,4 +87,20 @@
 .health.data_status_4 span{
     width:100%;
     background:green;
+}
+.poison.data_status_1 span{
+    width:25%;
+    background:green;
+}
+.poison.data_status_2 span{
+    width:50%;
+    background:yellowgreen;
+}
+.poison.data_status_3 span{
+    width:75%;
+    background:orange;
+}
+.poison.data_status_4 span{
+    width:100%;
+    background:red;
 }

@@ -1,25 +1,47 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as planetActions from 'store/modules/planet';
 
 import 'css/PlanetGround.css';
 
 class PlanetGroundContainer extends Component{
     constructor(props){
         super(props);
-        let get_data = this.props.data;
+        // let get_data = this.props.data;
 
         this.state = {
-            data : get_data,
-            data_status : this.set_status(get_data)
+            data : this.planet_status_set(this.props.data)
         };
-        console.log(this.state);
     }
 
+    planet_status_set = (ref) =>{
+        let data = ref ? ref : this.state.data;
+        let temp = this.set_status(data);
+        data.animal.health = temp.animal;
+        data.plant.health = temp.plant;
+        data.native.health = temp.native;
+        data.trash.poison = temp.trash;
+
+        this.props.planet_data(data);
+        return data;
+    }
     componentWillReceiveProps(nextProps){
-        console.log(nextProps.data);
-        this.setState({
-            data : nextProps.data,
-            data_status : this.set_status(nextProps.data)
-        });
+        console.log('recieve');
+        let data = nextProps.data;
+        let temp = this.set_status(nextProps.data);
+
+        if(nextProps.data !== this.state.data){
+            data.animal.health = temp.animal;
+            data.plant.health = temp.plant;
+            data.native.health = temp.native;
+            data.trash.poison = temp.trash;
+
+            this.props.planet_data(data);
+            console.log(data);
+            this.setState({
+                data : data
+            });
+        }
     }
 
     componentWillMount() {
@@ -29,9 +51,9 @@ class PlanetGroundContainer extends Component{
             localStorage.setItem('planetInfo', JSON.stringify(this.state.data));
         }else{
             this.setState({
-                planetInfo : JSON.parse(planetInfo),
+                data : JSON.parse(planetInfo),
                 nextId
-            }, function(){this.props.planet_data(JSON.parse(planetInfo)); console.log(this.state);});
+            });
         }
     }
 
@@ -49,41 +71,48 @@ class PlanetGroundContainer extends Component{
         let result = {plant : 0, animal : 0, native : 0, trash : 0};
 
         if(data){
-            if(data.animal.amount / data.plant.amount < 1.4){
-                if(data.animal.amount / data.plant.amount < 0.4){
-                    result.animal = 1;
-                }else{
-                    result.animal = 2;
-                }
-            }else if(data.animal.amount / data.plant.amount > 2){
+            let trash_rate = data.trash.amount / data.ground;
+            if(trash_rate < 30){
+                result.plant = 4;
+                result.trash = 1;
+            }else if(trash_rate < 50){
+                result.plant = 3;
+                result.trash = 2;
+            }else if(trash_rate < 80){
+                result.plant = 2;
+                result.trash = 3;
+            }else{
+                result.plant = 1;
+                result.trash = 4;
+            }
+
+            let flag_animal = 0;
+            let plant_rate = data.plant.amount / data.ground;
+            if(plant_rate < 50){
+                flag_animal += 1;
+            }else{
+                flag_animal += 2;
+            }
+            let temp_animal = flag_animal + result.plant - 1;
+            if(temp_animal > 4){
                 result.animal = 4;
             }else{
-                result.animal = 3;
+                result.animal = temp_animal;
             }
 
-            if((data.native.amount / (data.plant.amount + data.animal.amount)) < 0.5){
-                if((data.native.amount / (data.plant.amount + data.animal.amount)) < 0.2){
-                    result.native = 1;
-                }else{
-                    result.native = 2;
-                }
-            }else if((data.native.amount / (data.plant.amount + data.animal.amount)) > 0.8){
-                result.native = 4;
+            let flag_native = 0;
+            let life_rate = (data.plant.amount + data.animal.amount * 2) / data.ground;
+            if(life_rate < 200){
+                flag_native += 1;
             }else{
-                result.native = 3;
+                flag_native += 2;
             }
-
-            if(data.plant.amount / data.ground.amount / 100 < 1){
-                if(data.plant.amount / data.ground.amount / 100 < 0.4){
-                    result.plant = 1;
-                }else{
-                    result.plant = 2;
-                }
-            }else if(data.plant.amount / data.ground.amount / 100 > 1.5){
-                result.plant = 4;
+            if(result.animal + result.plant < 6){
+                flag_native += 1;
             }else{
-                result.plant = 3;
+                flag_native += 2;
             }
+            result.native = flag_native;
         }else{
             result = {plant : 3, animal : 3, native : 3, trash : 3};
         }
@@ -93,7 +122,6 @@ class PlanetGroundContainer extends Component{
 
     point_set = () => {
         let data = this.state.data;
-        let data_status = this.state.data_status;
         let points_arr1, points_arr2, points_arr3, result = [];
 
         points_arr1 = [
@@ -157,7 +185,7 @@ class PlanetGroundContainer extends Component{
                     result.push(
                         <svg
                             viewBox='0 0 600 600'
-                            key={`planet`+data.id+`_`+key_flag+`_p`} className={`plant_status_`+data_status.plant}>
+                            key={`planet`+data.id+`_`+key_flag+`_p`} className={`plant_status_`+data.plant.health}>
                             <path d={`M`+x_data+` `+y_data+` q -13 3, -10 -4 q 0 -10, 8 -7 q 1 -8, 10 -5 q 8 2, 3 10 q 8 2, 3 10 q -5 8, -11 -2 l -3 -2`} fill='#008000' className='plant_leaf'/>
                             <line x1={x_data+1} y1={y_data+1} x2={x_data-3} y2={y_data+14} stroke='#66350d' strokeWidth='3' className='plant_trunk'/>
                         </svg>
@@ -167,7 +195,7 @@ class PlanetGroundContainer extends Component{
                     result.push(
                         <svg
                             viewBox='0 0 600 600'
-                            key={`planet`+data.id+`_`+key_flag+`_a`}  className={`animal_status_`+data_status.animal}>
+                            key={`planet`+data.id+`_`+key_flag+`_a`}  className={`animal_status_`+data.animal.health}>
                             <path d={`M`+x_data+` `+y_data+` q 7 -7, 15 0 v 14 q -8 8, -15 1 v -15`} fill='#222' stroke='#ddd' className='animal_body'/>
                             <circle cx={x_data+7} cy={y_data+4} r='5' stroke='#333' fill='#eee' className='animal_eye' />
                             <circle cx={x_data+7} cy={y_data+4} r='2' fill='black' className='animal_pupil'/>
@@ -185,7 +213,7 @@ class PlanetGroundContainer extends Component{
                     result.push(
                         <svg
                             viewBox='0 0 600 600'
-                            key={`planet`+data.id+`_`+key_flag+`_h`} className={`native_status_`+data_status.native}>
+                            key={`planet`+data.id+`_`+key_flag+`_h`} className={`native_status_`+data.native.health}>
                             <path d={`M`+x_data+` `+y_data+` q 14 -20, 27 0 q 8 4, 0 8 q 0 4, -5 6 q 1 5, -8 8 q -11 -4, -9 -9 q -6 -2, -6 -5 q -8 -4, 0 -8`} fill='brown' className='native_hair'/>
                             <path d={`M`+(x_data+18)+` `+(y_data+18)+`h -11 q -2 -2, 1 -6 v -2 q -6 -1, -7 -6 q 5 -6, 11 0 h 3 q 5 -6, 10 0 q 0 6, -6 6 v 2 q 2 4, -1 6`} fill='white' stroke='white' className='native_face'/>
                             <circle cx={x_data+7} cy={y_data+5} r='3' fill='black' className='native_eye'/>
@@ -199,7 +227,7 @@ class PlanetGroundContainer extends Component{
                     result.push(
                         <svg
                             viewBox='0 0 600 600'
-                            key={`planet`+data.id+`_`+key_flag+`_t`} className={`trash_status_`+data_status.trash}>
+                            key={`planet`+data.id+`_`+key_flag+`_t`} className={`trash_status_`+data.trash.health}>
                             <path d={`M`+x_data+` `+y_data+` q -4 0, -6 4 l 4 -1 l 3 4 q 2 -5, -1 -7 q 2 -8, 17 -17 q -3 -3, -3 -5 l 11 -1 q -4 6, -4 9 q -4 -1, -4 -3 q -14 10, -17 17`} fill='darkgray' className='trash_body' />
                             <path d={`M`+(x_data+6)+` `+(y_data)+` q -1 -3, -4 -3 q -2 -3, -5 -3`} stroke='darkgray' className='trash_thron1' />
                             <path d={`M`+(x_data+10)+` `+(y_data-4)+` q -1 -4, -5 -3 q -2 -4, -5 -3`} stroke='darkgray' className='trash_thron2' />
@@ -244,4 +272,17 @@ class PlanetGroundContainer extends Component{
 
 }
 
-export default PlanetGroundContainer;
+const mapStateToProps = (state) => ({
+    data : state.planet.data
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    planet_num : (number = 0) => {
+        dispatch(planetActions.planet_num(number));
+    },
+    planet_data : (data = {})=> {
+        dispatch(planetActions.planet_data(data));
+    }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlanetGroundContainer);

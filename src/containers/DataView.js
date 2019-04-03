@@ -7,20 +7,37 @@ import 'css/DataView.css';
 class DataView extends Component{
     constructor(props){
         super(props);
-        let get_data = this.props.data;
+        // let get_data = this.props.data;
 
         this.state = {
-            data : get_data,
-            data_status : this.set_status(get_data)
+            data : this.copyObject(this.planet_status_set(this.props.data))
         };
-        console.log(this.state);
     }
 
+    planet_status_set = (ref) =>{
+        let data = ref ? ref : this.state.data;
+        let temp = this.set_status(data);
+        data.animal.health = temp.animal;
+        data.plant.health = temp.plant;
+        data.native.health = temp.native;
+        data.trash.poison = temp.trash;
+
+        this.props.planet_data(data);
+        return data;
+    }
     componentWillReceiveProps(nextProps){
-        this.setState({
-            data : nextProps.data,
-            data_status : this.set_status(nextProps.data)
-        });
+        console.log('recieve');
+        let data = this.state.data;
+        let temp = this.set_status(nextProps.data);
+        data.animal.health = temp.animal;
+        data.plant.health = temp.plant;
+        data.native.health = temp.native;
+        data.trash.poison = temp.trash;
+
+        this.props.planet_data(data);
+        // this.setState({
+        //     data : data
+        // });
     }
 
     componentWillMount() {
@@ -31,13 +48,13 @@ class DataView extends Component{
         }else{
             this.setState({
                 data : JSON.parse(planetInfo),
-                data_status : this.set_status(JSON.parse(planetInfo)),
                 nextId
             });
         }
     }
 
     componentDidUpdate(prevProps, prevState) {
+        console.log(this.props);
         if(JSON.stringify(prevState.data) !== JSON.stringify(this.state.data)) {
             localStorage.planetInfo = JSON.stringify(this.state.data);
         }
@@ -47,45 +64,97 @@ class DataView extends Component{
         }
     }
 
+    copyObject = (obj) => {
+        let copy = Array.isArray(obj) ? [] : {};
+
+        if (typeof obj === 'object' && obj !== null) {
+            for (let attr in obj) {
+                if (obj.hasOwnProperty(attr)) {
+                    copy[attr] = this.copyObject(obj[attr]);
+                }
+            }
+        } else {
+            copy = obj;
+        }
+        return copy;
+    }
+
+    compareObject = (a, b) => {
+        let type = typeof a, i, j;
+        if (type === "object") {
+            if (a === null) return a === b;
+            else if (Array.isArray(a)) {
+                if (!Array.isArray(b) || a.length !== b.length) return false;
+                for (i = 0, j = a.length; i < j; i++) {
+                    if (!this.compareObject(a[i], b[i])) return false;
+                }
+                return true;
+            } else { //일반 오브젝트인 경우
+
+                j = 0;
+                for (i in b) {
+                    if (b.hasOwnProperty(i)) j++;
+                }
+
+                for (i in a) {
+                    if (a.hasOwnProperty(i)) {
+                        if (!this.compareObject(a[i], b[i])) return false;
+                        j--;
+                    }
+                }
+
+                return !j;
+            }
+        }
+        return a === b;
+    }
+
     set_status = (data) =>{
         let result = {plant : 0, animal : 0, native : 0, trash : 0};
 
         if(data){
-            if(data.animal.amount / data.plant.amount < 1.4){
-                if(data.animal.amount / data.plant.amount < 0.4){
-                    result.animal = 1;
-                }else{
-                    result.animal = 2;
-                }
-            }else if(data.animal.amount / data.plant.amount > 2){
+            let trash_rate = data.trash.amount / data.ground;
+            if(trash_rate < 30){
+                result.plant = 4;
+                result.trash = 1;
+            }else if(trash_rate < 50){
+                result.plant = 3;
+                result.trash = 2;
+            }else if(trash_rate < 80){
+                result.plant = 2;
+                result.trash = 3;
+            }else{
+                result.plant = 1;
+                result.trash = 4;
+            }
+
+            let flag_animal = 0;
+            let plant_rate = data.plant.amount / data.ground;
+            if(plant_rate < 50){
+                flag_animal += 1;
+            }else{
+                flag_animal += 2;
+            }
+            let temp_animal = flag_animal + result.plant - 1;
+            if(temp_animal > 4){
                 result.animal = 4;
             }else{
-                result.animal = 3;
+                result.animal = temp_animal;
             }
 
-            if((data.native.amount / (data.plant.amount + data.animal.amount)) < 0.5){
-                if((data.native.amount / (data.plant.amount + data.animal.amount)) < 0.2){
-                    result.native = 1;
-                }else{
-                    result.native = 2;
-                }
-            }else if((data.native.amount / (data.plant.amount + data.animal.amount)) > 0.8){
-                result.native = 4;
+            let flag_native = 0;
+            let life_rate = (data.plant.amount + data.animal.amount * 2) / data.ground;
+            if(life_rate < 200){
+                flag_native += 1;
             }else{
-                result.native = 3;
+                flag_native += 2;
             }
-
-            if(data.plant.amount / data.ground.amount / 100 < 1){
-                if(data.plant.amount / data.ground.amount / 100 < 0.4){
-                    result.plant = 1;
-                }else{
-                    result.plant = 2;
-                }
-            }else if(data.plant.amount / data.ground.amount / 100 > 1.5){
-                result.plant = 4;
+            if(result.animal + result.plant < 6){
+                flag_native += 1;
             }else{
-                result.plant = 3;
+                flag_native += 2;
             }
+            result.native = flag_native;
         }else{
             result = {plant : 3, animal : 3, native : 3, trash : 3};
         }
@@ -94,15 +163,29 @@ class DataView extends Component{
     }
 
     planetDataSet=(data, target, action)=>{
-        console.log(data, target, action);
-        var test = data[target];
-        console.log(test);
-        // this.props.planet_data(data);
+        let temp = data;
+        switch(action){
+            case 'add':
+                temp[target].amount += 300;
+                break;
+            case 'remove':
+                if(temp[target].amount > 300){
+                    temp[target].amount -= 300;
+                }
+                break;
+            default:
+                console.log(action);
+                break;
+        }
+        this.props.planet_data(this.copyObject(this.planet_status_set(temp)));
+        this.setState({
+            data : this.planet_status_set(this.copyObject(temp))
+        });
+        
     }
 
     render(){
         let data = this.state.data;
-        let status = this.state.data_status;
         let x_data1 = 45;
         let y_data1 = 25;
         let x_data2 = 50;
@@ -111,8 +194,6 @@ class DataView extends Component{
         let y_data3 = 29;
         let x_data4 = 45;
         let y_data4 = 42;
-
-        console.log(this.state);
 
         return(
             <div className='dataContainer'>
@@ -140,12 +221,12 @@ class DataView extends Component{
                         <li><p>Amount : {data.animal.amount / 100}m</p></li>
                         <li>
                             <p>Health</p>
-                            <div className={`health data_status_`+status.animal}><span></span></div>
+                            <div className={`health data_status_`+data.animal.health}><span></span></div>
                         </li>
                     </ul>
                     <div>
                         <button className='btn_reproduce' onClick={()=>this.planetDataSet(data, 'animal', 'add')}>REPRODUCE</button>
-                        <button className='btn_die'>DIE</button>
+                        <button className='btn_die' onClick={()=>this.planetDataSet(data, 'animal', 'remove')}>DIE</button>
                         <svg viewBox='0 0 200 30'>
                             <path d='M10 17 l 10 -13 h 72 v 13 z' stroke='gray' strokeWidth='1'/>
                             <path d='M107 17 l 10 -13 h 72 v 13 z' stroke='gray' strokeWidth='1'/>
@@ -168,12 +249,12 @@ class DataView extends Component{
                         <li><p>Amount : {data.plant.amount / 100}m</p></li>
                         <li>
                             <p>Health</p>
-                            <div className={`health data_status_`+status.plant}><span></span></div>
+                            <div className={`health data_status_`+data.plant.health}><span></span></div>
                         </li>
                     </ul>
                     <div>
-                        <button className='btn_reproduce'>REPRODUCE</button>
-                        <button className='btn_die'>DIE</button>
+                        <button className='btn_reproduce' onClick={()=>this.planetDataSet(data, 'plant', 'add')}>REPRODUCE</button>
+                        <button className='btn_die' onClick={()=>this.planetDataSet(data, 'plant', 'remove')}>DIE</button>
                         <svg viewBox='0 0 200 30'>
                             <path d='M10 17 l 10 -13 h 72 v 13 z' stroke='gray' strokeWidth='1'/>
                             <path d='M107 17 l 10 -13 h 72 v 13 z' stroke='gray' strokeWidth='1'/>
@@ -200,12 +281,12 @@ class DataView extends Component{
                         <li><p>Amount : {data.native.amount / 100}m</p></li>
                         <li>
                             <p>Health</p>
-                            <div className={`health data_status_`+status.native}><span></span></div>
+                            <div className={`health data_status_`+data.native.health}><span></span></div>
                         </li>
                     </ul>
                     <div>
-                        <button className='btn_reproduce'>REPRODUCE</button>
-                        <button className='btn_die'>DIE</button>
+                        <button className='btn_reproduce' onClick={()=>this.planetDataSet(data, 'native', 'add')}>REPRODUCE</button>
+                        <button className='btn_die' onClick={()=>this.planetDataSet(data, 'native', 'remove')}>DIE</button>
                         <svg viewBox='0 0 200 30'>
                             <path d='M10 17 l 10 -13 h 72 v 13 z' stroke='gray' strokeWidth='1'/>
                             <path d='M107 17 l 10 -13 h 72 v 13 z' stroke='gray' strokeWidth='1'/>
@@ -231,12 +312,12 @@ class DataView extends Component{
                         <li><p>Amount : {data.trash.amount}kt</p></li>
                         <li>
                             <p>poison</p>
-                            <div className={`poison data_status_`+status.trash}><span></span></div>
+                            <div className={`poison data_status_`+data.trash.poison}><span></span></div>
                         </li>
                     </ul>
-                    <div>
-                        <button className='btn_reproduce'>REPRODUCE</button>
-                        <button className='btn_die'>DIE</button>
+                    <div className='view_btn_area'>
+                        <button className='btn_reproduce' onClick={()=>this.planetDataSet(data, 'trash', 'add')}>WASTE</button>
+                        <button className='btn_die' onClick={()=>this.planetDataSet(data, 'trash', 'remove')}>RECYCLE</button>
                         <svg viewBox='0 0 200 30'>
                             <path d='M10 17 l 10 -13 h 72 v 13 z' stroke='gray' strokeWidth='1'/>
                             <path d='M107 17 l 10 -13 h 72 v 13 z' stroke='gray' strokeWidth='1'/>

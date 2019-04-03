@@ -82,11 +82,6 @@ class Home extends Component {
             planet.push(obj);
             rate.push(obj.animal.amoount / obj.native.amount);
         }
-        console.log(planet);
-        for(let i = 0; i < 3; i++){
-            let temp = planet[i];
-            console.log(i, temp.animal.amount / temp.plant.amount, temp.native.amount / (temp.animal.amount+temp.plant.amount));
-        }
 
         return planet;
     }
