@@ -26,7 +26,6 @@ class PlanetGroundContainer extends Component{
         return data;
     }
     componentWillReceiveProps(nextProps){
-        console.log('recieve');
         let data = nextProps.data;
         let temp = this.set_status(nextProps.data);
 
@@ -37,7 +36,6 @@ class PlanetGroundContainer extends Component{
             data.trash.poison = temp.trash;
 
             this.props.planet_data(data);
-            console.log(data);
             this.setState({
                 data : data
             });

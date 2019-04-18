@@ -5,6 +5,7 @@ import * as planetActions from 'store/modules/planet';
 
 import PlanetGroundContainer from 'containers/PlanetGroundContainer';
 import DataView from 'containers/DataView';
+import DataSummary from '../containers/DataSummary';
 import 'css/planetDetail.css';
 
 class PlanetDetail extends Component{
@@ -93,9 +94,6 @@ class PlanetDetail extends Component{
 
     componentWillReceiveProps(PrevState, nextProps){
         let self = this;
-        console.log(PrevState);
-        console.log(this.state.planetInfo);
-        console.log(nextProps);
         if(!this.compareObject(PrevState.planetInfo, nextProps.data)){
             self.setState({
                 planetInfo : {...nextProps.data}
@@ -109,8 +107,6 @@ class PlanetDetail extends Component{
     }
 
     // static getDerivedStateFromProps(nextProps, prevState) {
-    //     console.log(prevState.planetInfo);
-    //     console.log(nextProps.data);
     //     if(nextProps.data !== prevState.planetInfo){
     //         return {planetInfo : nextProps.data};
     //     }
@@ -141,6 +137,10 @@ class PlanetDetail extends Component{
                     />
 
                     <DataView
+                        data = {this.props.data}
+                    />
+
+                    <DataSummary
                         data = {this.props.data}
                     />
                 </div>

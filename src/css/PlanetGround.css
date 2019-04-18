@@ -9,7 +9,7 @@
     left: 10%;
     width: calc(80% - 20rem);
     height: 56rem;
-    transform: translateY(-48%);
+    transform: translateY(-54%);
     /* border: solid 1px #fff; */
 }
 .groundContainer svg{

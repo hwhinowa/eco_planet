@@ -26,7 +26,6 @@ class DataView extends Component{
         return data;
     }
     componentWillReceiveProps(nextProps){
-        console.log('recieve');
         let data = this.state.data;
         let temp = this.set_status(nextProps.data);
         data.animal.health = temp.animal;
@@ -54,7 +53,6 @@ class DataView extends Component{
     }
 
     componentDidUpdate(prevProps, prevState) {
-        console.log(this.props);
         if(JSON.stringify(prevState.data) !== JSON.stringify(this.state.data)) {
             localStorage.planetInfo = JSON.stringify(this.state.data);
         }
