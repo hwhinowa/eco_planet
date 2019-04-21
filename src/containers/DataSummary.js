@@ -147,6 +147,9 @@ class DataSummary extends Component{
                 flag_native += 2;
             }
             result.native = flag_native;
+            if((data.plant.amount + data.animal.amount) < data.native.amount * 2){
+                result.native -= 1;
+            }
         }else{
             result = {plant : 3, animal : 3, native : 3, trash : 3};
         }
@@ -183,6 +186,30 @@ class DataSummary extends Component{
                 text += '건강한 동물과 영양분 가득한 식물이 풍족해 원주민들의 삶의 질이 높습니다. ';
             }
         }
+
+        let flag_density;
+        if(data.native.amount / data.ground < 50){
+            flag_density = 1;
+            text += '이 곳의 인구밀도는 1헥타르당 '+(data.native.amount / data.ground)+'만명으로 육지 면적에 비해 인구수가 상당히 낮은 편입니다.';
+        }else if(data.native.amount / data.ground > 100){
+            flag_density = 3;
+            text += '이 곳의 인구밀도는 1헥타르당 '+(data.native.amount / data.ground)+'만명으로 육지 면적에 비해 인구수가 상당히 높은 편입니다.';
+        }else{
+            flag_density = 2;
+            text += '이 곳의 인구밀도는 1헥타르당 '+(data.native.amount / data.ground)+'만명으로 적정 수준을 유지하고 있습니다.';
+        }
+
+        if((data.animal.amount + data.plant.amount) < data.native.amount){
+            text += '하지만 그에 비해 동식물 수가 충분하지 못하기 때문에 곳곳에 빈민가가 형성되었습니다. ';
+        }
+
+        if(data.trash.poison < 3){
+            text += '체계적인 쓰레기 처리시설과 원주민들의 높은 시민의식으로 쓰레기 배출량이 적정량으로 유지되고 있습니다. 우리가 할 일은 지금의 아름다운 모습을 간직하는 것입니다.';
+        }else{
+            text += '무분별한 쓰레기 투기와 분리수거가 제대로 이뤄지지않아 독성이 강한 쓰레기들이 행성을 병들게 하고 있습니다. 우리가 할 수 있는 일은 무엇일까요?';
+        }
+
+
 
         return text;
     }

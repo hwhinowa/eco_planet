@@ -144,10 +144,6 @@ class PlanetDetail extends Component{
                         data = {this.props.data}
                     />
                 </div>
-                {/* <div>
-                    불시착하여 우주 미아가 되었습니다. 다음 생애 다시 오시기 바랍니다.
-                </div>
-                */}
             </div>
         );
     }

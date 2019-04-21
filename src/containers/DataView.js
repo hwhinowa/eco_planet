@@ -153,6 +153,9 @@ class DataView extends Component{
                 flag_native += 2;
             }
             result.native = flag_native;
+            if((data.plant.amount + data.animal.amount) < data.native.amount * 2){
+                result.native -= 1;
+            }
         }else{
             result = {plant : 3, animal : 3, native : 3, trash : 3};
         }
