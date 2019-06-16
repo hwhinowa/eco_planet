@@ -4,6 +4,25 @@ import { Route, Switch } from 'react-router-dom';
 import { Home, PlanetDetail } from 'pages';
 
 class App extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            isMS : false
+        };
+        this.check();
+    }
+    check=()=>{
+        let isIE = /*@cc_on!@*/false || !!document.documentMode; // IE
+        if(isIE){
+            this.setState({
+                isMs : true
+            },function(){console.log(this.state);})
+            let body = document.querySelector('body');
+            console.log(body);
+            body.classList.add('active');
+        };
+    };
+
     render(){
         // console.log(process.env.PUBLIC_URL);
         return(

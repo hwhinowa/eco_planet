@@ -134,13 +134,13 @@ class PlanetGroundContainer extends Component{
             [319, 314], [200, 488], [270, 138], [273, 247], [307, 519], [104, 122], [485, 210], [438, 373], [515, 352], [375, 151], [405, 210], [257, 400]
         ];
 
-        let p, a, h, t = 0;
+        let p, a, t = 0;
 
         t = data.native.amount / data.ground.amount > 0.7 ? 3 : 2;
         let rate_ref = 12 - t;
         p = Math.floor(data.plant.amount / (data.animal.amount + data.plant.amount + data.native.amount) / rate_ref * 100);
         a = Math.floor(data.animal.amount / (data.animal.amount + data.plant.amount + data.native.amount) / rate_ref * 100);
-        h = rate_ref - p - a;
+        // h = rate_ref - p - a;
         let middle_arr;
 
         switch(data.id){

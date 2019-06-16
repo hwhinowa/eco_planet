@@ -24,7 +24,7 @@ class Home extends Component {
             cursor_right : false,
             opacity : false,
             planet_info : planet_info
-        }
+        };
     }
 
     // Width Modify
@@ -157,6 +157,10 @@ class Home extends Component {
         }
         return (
             <div className='App' onMouseOver={(event)=>this.rotate_by_cursor(event)}>
+                {/* IE */}
+                <div className="get_out">
+                    <p>사이트를 표시할 수 없습니다. PC(브라우저 : Chrome, Firefox나 Opera)로 접속하세요</p>
+                </div>
                 {/* 행성 표시 */}
                 {this.set_planet_view()}
 

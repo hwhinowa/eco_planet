@@ -15,6 +15,31 @@ body, #root, #root > div, .App{
     overflow:hidden;
 }
 
+.get_out{
+    display:none;
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    padding:20vh 5rem 0;
+    box-sizing:border-box;
+    background:#17d789;
+    z-index:99999;
+}
+body.active .get_out{
+    display:block;
+}
+body.active .get_out p{
+    height:100%;
+    font-size:5rem;
+    font-weight:900;
+    color:rgba(0, 255, 174, 1);
+    text-align:center;
+    line-height:120%;
+    letter-spacing:-1px;
+}
+
 .App{
     position:relative;
     background:#041215;

@@ -187,15 +187,11 @@ class DataSummary extends Component{
             }
         }
 
-        let flag_density;
         if(data.native.amount / data.ground < 50){
-            flag_density = 1;
             text += '이 곳의 인구밀도는 1헥타르당 '+(data.native.amount / data.ground)+'만명으로 육지 면적에 비해 인구수가 상당히 낮은 편입니다.';
         }else if(data.native.amount / data.ground > 100){
-            flag_density = 3;
             text += '이 곳의 인구밀도는 1헥타르당 '+(data.native.amount / data.ground)+'만명으로 육지 면적에 비해 인구수가 상당히 높은 편입니다.';
         }else{
-            flag_density = 2;
             text += '이 곳의 인구밀도는 1헥타르당 '+(data.native.amount / data.ground)+'만명으로 적정 수준을 유지하고 있습니다.';
         }
 
@@ -216,7 +212,6 @@ class DataSummary extends Component{
 
 
     render(){
-        let data = this.state.data;
         let starting_text = this.set_text();
 
         return(
