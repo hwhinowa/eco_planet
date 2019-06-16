@@ -46,11 +46,11 @@ class Home extends Component {
         if(nextProps.number !== 0){
             this.setState({
                 opacity : true
-            }, function(){console.log(this.state)});
+            });
         }else{
             this.setState({
                 opacity : false
-            }, function(){console.log(this.state)});
+            });
         }
     }
 
